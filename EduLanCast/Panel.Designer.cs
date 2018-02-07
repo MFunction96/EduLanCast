@@ -1,6 +1,6 @@
 ﻿namespace EduLanCast
 {
-    partial class Form1
+    partial class Panel
     {
         /// <summary>
         /// Required designer variable.

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace EduLanCast
 {
-    public partial class Form1 : Form
+    public partial class Panel : Form
     {
-        public Form1()
+        public Panel()
         {
             InitializeComponent();
         }
