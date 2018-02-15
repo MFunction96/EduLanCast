@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EduLanCast.Views;
+using System;
 using System.Windows.Forms;
 
 namespace EduLanCast
@@ -16,7 +14,7 @@ namespace EduLanCast
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Panel());
+            Application.Run(new PanelForm());
         }
     }
 }
