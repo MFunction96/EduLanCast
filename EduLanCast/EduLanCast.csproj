@@ -131,11 +131,5 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ScreenCapture\ScreenCapture.vcxproj">
-      <Project>{1733614a-66c9-4515-88e5-57c489890d4a}</Project>
-      <Name>ScreenCapture</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
