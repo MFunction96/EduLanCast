@@ -28,12 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.BtnDemo = new System.Windows.Forms.Button();
             this.PbScreen = new System.Windows.Forms.PictureBox();
             this.BtnStop = new System.Windows.Forms.Button();
             this.CbAdapters = new System.Windows.Forms.ComboBox();
             this.CbFps = new System.Windows.Forms.ComboBox();
+            this.CbOutputs = new System.Windows.Forms.ComboBox();
+            this.dxgiOutput1BindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.PbScreen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dxgiOutput1BindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnDemo
@@ -48,7 +52,7 @@
             // 
             // PbScreen
             // 
-            this.PbScreen.Location = new System.Drawing.Point(55, 93);
+            this.PbScreen.Location = new System.Drawing.Point(55, 115);
             this.PbScreen.Name = "PbScreen";
             this.PbScreen.Size = new System.Drawing.Size(813, 456);
             this.PbScreen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -69,7 +73,7 @@
             // 
             this.CbAdapters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CbAdapters.FormattingEnabled = true;
-            this.CbAdapters.Location = new System.Drawing.Point(55, 53);
+            this.CbAdapters.Location = new System.Drawing.Point(55, 36);
             this.CbAdapters.Name = "CbAdapters";
             this.CbAdapters.Size = new System.Drawing.Size(813, 23);
             this.CbAdapters.TabIndex = 3;
@@ -79,17 +83,32 @@
             // 
             this.CbFps.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CbFps.FormattingEnabled = true;
-            this.CbFps.Location = new System.Drawing.Point(899, 53);
+            this.CbFps.Location = new System.Drawing.Point(897, 36);
             this.CbFps.Name = "CbFps";
             this.CbFps.Size = new System.Drawing.Size(121, 23);
             this.CbFps.TabIndex = 4;
             this.CbFps.SelectedIndexChanged += new System.EventHandler(this.CbFps_SelectedIndexChanged);
+            // 
+            // CbOutputs
+            // 
+            this.CbOutputs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CbOutputs.FormattingEnabled = true;
+            this.CbOutputs.Location = new System.Drawing.Point(55, 74);
+            this.CbOutputs.Name = "CbOutputs";
+            this.CbOutputs.Size = new System.Drawing.Size(813, 23);
+            this.CbOutputs.TabIndex = 5;
+            this.CbOutputs.SelectedIndexChanged += new System.EventHandler(this.CbOutputs_SelectedIndexChanged);
+            // 
+            // dxgiOutput1BindingSource
+            // 
+            this.dxgiOutput1BindingSource.DataSource = typeof(JeremyAnsel.DirectX.Dxgi.DxgiOutput1);
             // 
             // PanelForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1045, 608);
+            this.Controls.Add(this.CbOutputs);
             this.Controls.Add(this.CbFps);
             this.Controls.Add(this.CbAdapters);
             this.Controls.Add(this.BtnStop);
@@ -99,6 +118,7 @@
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PanelForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.PbScreen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dxgiOutput1BindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -110,6 +130,8 @@
         private System.Windows.Forms.Button BtnStop;
         private System.Windows.Forms.ComboBox CbAdapters;
         private System.Windows.Forms.ComboBox CbFps;
+        private System.Windows.Forms.ComboBox CbOutputs;
+        private System.Windows.Forms.BindingSource dxgiOutput1BindingSource;
     }
 }
 

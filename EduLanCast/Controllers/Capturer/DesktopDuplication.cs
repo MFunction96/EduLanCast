@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace EduLanCast.Controllers.Capturer
 {
@@ -10,11 +11,17 @@ namespace EduLanCast.Controllers.Capturer
         public int Fps { get; set; }
         public DxgiFactory1 Factory1 { get; }
         public IEnumerable<DxgiAdapter1> Adapters1 { get; }
+        public IEnumerable<DxgiOutput1> Outputs1 { get; set; }
 
         public DesktopDuplication()
         {
             Factory1 = DxgiFactory1.Create();
             Adapters1 = Factory1.EnumAdapters();
+        }
+
+        public void QueryOutputs(DxgiAdapter1 adapter1)
+        {
+            Outputs1 = adapter1.EnumOutputs();
         }
 
         public void Test()
@@ -23,19 +30,9 @@ namespace EduLanCast.Controllers.Capturer
             {
                 Console.WriteLine(adapter1);
             }
+            
         }
 
-        public Bitmap Capture()
-        {
-            var bitmap = new Bitmap(0, 0);
-            var factory = DxgiFactory1.Create();
-            var adapters = factory.EnumAdapters();
-            foreach (var adapter in adapters)
-            {
-                
-            }
-            return bitmap;
-        }
         /*        private Bitmap _bitmap;
 
                 public Bitmap Capture()

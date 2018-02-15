@@ -31,6 +31,8 @@ namespace EduLanCast.Views
             CbFps.DataSource = Fps;
             Interval = (int)CbFps.SelectedItem;
             CbAdapters.DataSource = Controller.Adapters;
+            Controller.QueryOutputs((string) CbAdapters.SelectedItem);
+            CbOutputs.DataSource = Controller.Outputs;
         }
 
         private void BtnDemo_Click(object sender, EventArgs e)
@@ -53,7 +55,7 @@ namespace EduLanCast.Views
 
         private void CbAdapters_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            CbOutputs.DataSource = Controller.Outputs;
         }
 
         private void CbFps_SelectedIndexChanged(object sender, EventArgs e)
@@ -66,6 +68,11 @@ namespace EduLanCast.Views
         private void PanelForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             
+        }
+
+        private void CbOutputs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
