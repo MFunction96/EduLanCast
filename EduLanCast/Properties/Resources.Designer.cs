@@ -59,5 +59,14 @@ namespace EduLanCast.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to null.
+        /// </summary>
+        internal static string NullTip {
+            get {
+                return ResourceManager.GetString("NullTip", resourceCulture);
+            }
+        }
     }
 }

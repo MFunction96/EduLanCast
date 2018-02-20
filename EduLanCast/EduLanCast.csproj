@@ -11,6 +11,8 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,10 +25,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -54,14 +54,18 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="JeremyAnsel.DirectX.D3D11, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e8ded40706ec7900, processorArchitecture=MSIL">
-      <HintPath>..\packages\JeremyAnsel.DirectX.D3D11.1.0.9\lib\net45\JeremyAnsel.DirectX.D3D11.dll</HintPath>
+    <Reference Include="SharpDX, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.4.0.1\lib\net45\SharpDX.dll</HintPath>
     </Reference>
-    <Reference Include="JeremyAnsel.DirectX.Dxgi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=205d9c995c583cfd, processorArchitecture=MSIL">
-      <HintPath>..\packages\JeremyAnsel.DirectX.Dxgi.1.0.9\lib\net45\JeremyAnsel.DirectX.Dxgi.dll</HintPath>
+    <Reference Include="SharpDX.DXGI, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.DXGI.4.0.1\lib\net45\SharpDX.DXGI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,7 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Capturer\DesktopDuplication.cs" />
-    <Compile Include="Controllers\Record\ScreenRecorder.cs" />
     <Compile Include="Controllers\Views\PanelController.cs" />
     <Compile Include="Views\PanelForm.cs">
       <SubType>Form</SubType>
@@ -120,9 +123,9 @@
     <Folder Include="Models\Capturer\" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.7.1 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

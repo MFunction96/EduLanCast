@@ -1,36 +1,32 @@
-﻿using JeremyAnsel.DirectX.Dxgi;
-using System;
+﻿using SharpDX.DXGI;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading.Tasks;
 
 namespace EduLanCast.Controllers.Capturer
 {
     public class DesktopDuplication
     {
-        public int Fps { get; set; }
-        public DxgiFactory1 Factory1 { get; }
-        public IEnumerable<DxgiAdapter1> Adapters1 { get; }
-        public IEnumerable<DxgiOutput1> Outputs1 { get; set; }
+        public Factory1 Factory { get; }
+        public IEnumerable<Adapter1> Adapters1 { get; }
+        public IEnumerable<Output> Outputs { get; private set; }
+        public Rectangle ScreenDpi { get; private set; }
 
         public DesktopDuplication()
         {
-            Factory1 = DxgiFactory1.Create();
-            Adapters1 = Factory1.EnumAdapters();
+            Factory = new Factory1();
+            Adapters1 = Factory.Adapters1;
         }
 
-        public void QueryOutputs(DxgiAdapter1 adapter1)
+        public void QueryOutputs(Adapter1 adapter1)
         {
-            Outputs1 = adapter1.EnumOutputs();
+            Outputs = adapter1.Outputs;
         }
 
-        public void Test()
+        public Rectangle SelectOutput(Output output)
         {
-            foreach (var adapter1 in Adapters1)
-            {
-                Console.WriteLine(adapter1);
-            }
-            
+            var width = output.Description.DesktopBounds.Right - output.Description.DesktopBounds.Left;
+            var height = output.Description.DesktopBounds.Bottom - output.Description.DesktopBounds.Top;
+            return ScreenDpi = new Rectangle(0, 0, width, height);
         }
 
         /*        private Bitmap _bitmap;
@@ -52,7 +48,7 @@ namespace EduLanCast.Controllers.Capturer
 
                     // Get DXGI.Output
                     var output = adapter.GetOutput(numOutput);
-                    var output1 = output.QueryInterface<Output1>();
+                    var output = output.QueryInterface<Output1>();
 
                     // Width/Height of desktop to capture
                     var width = ((Rectangle)output.Description.DesktopBounds).Width;
@@ -75,7 +71,7 @@ namespace EduLanCast.Controllers.Capturer
                     var screenTexture = new Texture2D(device, textureDesc);
 
                     // Duplicate the output
-                    var duplicatedOutput = output1.DuplicateOutput(device);
+                    var duplicatedOutput = output.DuplicateOutput(device);
 
                     var captureDone = false;
                     for (var i = 0; !captureDone; i++)

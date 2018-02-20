@@ -28,21 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.BtnDemo = new System.Windows.Forms.Button();
             this.PbScreen = new System.Windows.Forms.PictureBox();
             this.BtnStop = new System.Windows.Forms.Button();
             this.CbAdapters = new System.Windows.Forms.ComboBox();
             this.CbFps = new System.Windows.Forms.ComboBox();
             this.CbOutputs = new System.Windows.Forms.ComboBox();
-            this.dxgiOutput1BindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.LblDpi = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PbScreen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dxgiOutput1BindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnDemo
             // 
-            this.BtnDemo.Location = new System.Drawing.Point(924, 115);
+            this.BtnDemo.Location = new System.Drawing.Point(920, 131);
             this.BtnDemo.Name = "BtnDemo";
             this.BtnDemo.Size = new System.Drawing.Size(75, 23);
             this.BtnDemo.TabIndex = 0;
@@ -61,7 +59,7 @@
             // 
             // BtnStop
             // 
-            this.BtnStop.Location = new System.Drawing.Point(924, 157);
+            this.BtnStop.Location = new System.Drawing.Point(920, 173);
             this.BtnStop.Name = "BtnStop";
             this.BtnStop.Size = new System.Drawing.Size(75, 23);
             this.BtnStop.TabIndex = 2;
@@ -99,15 +97,20 @@
             this.CbOutputs.TabIndex = 5;
             this.CbOutputs.SelectedIndexChanged += new System.EventHandler(this.CbOutputs_SelectedIndexChanged);
             // 
-            // dxgiOutput1BindingSource
+            // LblDpi
             // 
-            this.dxgiOutput1BindingSource.DataSource = typeof(JeremyAnsel.DirectX.Dxgi.DxgiOutput1);
+            this.LblDpi.AutoSize = true;
+            this.LblDpi.Location = new System.Drawing.Point(897, 81);
+            this.LblDpi.Name = "LblDpi";
+            this.LblDpi.Size = new System.Drawing.Size(0, 15);
+            this.LblDpi.TabIndex = 6;
             // 
             // PanelForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1045, 608);
+            this.Controls.Add(this.LblDpi);
             this.Controls.Add(this.CbOutputs);
             this.Controls.Add(this.CbFps);
             this.Controls.Add(this.CbAdapters);
@@ -118,8 +121,8 @@
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PanelForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.PbScreen)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dxgiOutput1BindingSource)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -131,7 +134,7 @@
         private System.Windows.Forms.ComboBox CbAdapters;
         private System.Windows.Forms.ComboBox CbFps;
         private System.Windows.Forms.ComboBox CbOutputs;
-        private System.Windows.Forms.BindingSource dxgiOutput1BindingSource;
+        private System.Windows.Forms.Label LblDpi;
     }
 }
 

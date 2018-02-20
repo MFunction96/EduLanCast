@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
+using EduLanCast.Properties;
 
 namespace EduLanCast.Views
 {
@@ -11,9 +12,9 @@ namespace EduLanCast.Views
         private IList<int> Fps { get; }
         private IList<Thread> Threads { get; }
         private IList<bool> Switchs { get; }
-        private Dictionary<string,int> Map { get; }
+        private Dictionary<string, int> ThreadIndex { get; }
         private int Interval { get; set; }
-        private int Count { get; set; }
+        private int Count { get; }
         private PanelController Controller { get; }
 
         public PanelForm()
@@ -21,28 +22,26 @@ namespace EduLanCast.Views
             InitializeComponent();
             Fps = new List<int> { 1, 2, 5, 10, 20, 50, 100 };
             Threads = new List<Thread>();
-            Switchs = new List<bool> {true};
-            Map = new Dictionary<string, int>();
+            Switchs = new List<bool> { true };
+            ThreadIndex = new Dictionary<string, int>();
             Controller = new PanelController();
             Count = 0;
-            Map["CaptureScreen"] = Count++;
-            var thread = new Thread(ShowScreen) {Name = "CaptureScreen"};
+            ThreadIndex["CaptureScreen"] = Count++;
+            var thread = new Thread(ShowScreen) { Name = "CaptureScreen" };
             Threads.Add(thread);
             CbFps.DataSource = Fps;
             Interval = (int)CbFps.SelectedItem;
             CbAdapters.DataSource = Controller.Adapters;
-            Controller.QueryOutputs((string) CbAdapters.SelectedItem);
-            CbOutputs.DataSource = Controller.Outputs;
         }
 
         private void BtnDemo_Click(object sender, EventArgs e)
         {
-            Threads[Map["CaptureScreen"]].Start();
+            Threads[ThreadIndex["CaptureScreen"]].Start();
         }
 
         private void ShowScreen()
         {
-            while (Switchs[Map["CaptureScreen"]])
+            while (Switchs[ThreadIndex["CaptureScreen"]])
             {
                 Thread.Sleep(Interval);
             }
@@ -50,29 +49,35 @@ namespace EduLanCast.Views
 
         private void BtnStop_Click(object sender, EventArgs e)
         {
-            Switchs[Map["CaptureScreen"]] = false;
+            Switchs[ThreadIndex["CaptureScreen"]] = false;
         }
 
-        private void CbAdapters_SelectedIndexChanged(object sender, EventArgs e)
+        private async void CbAdapters_SelectedIndexChanged(object sender, EventArgs e)
         {
+            await Controller.QueryOutputsAsync(CbAdapters.SelectedItem.ToString());
+            CbOutputs.DataSource = null;
             CbOutputs.DataSource = Controller.Outputs;
         }
 
         private void CbFps_SelectedIndexChanged(object sender, EventArgs e)
         {
             Interval = (int)CbFps.SelectedItem;
-            Controller.Duplication.Fps = (int) CbFps.SelectedItem;
-            Controller.Recorder.Fps = (int) CbFps.SelectedItem;
+            Controller.Fps = (int)CbFps.SelectedItem;
         }
 
         private void PanelForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
+            for (var i = 0; i < Switchs.Count; i++)
+            {
+                Switchs[i] = false;
+            }
         }
 
-        private void CbOutputs_SelectedIndexChanged(object sender, EventArgs e)
+        private async void CbOutputs_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            LblDpi.Text = CbOutputs.DataSource is null
+                ? Resources.NullTip
+                : await Controller.SelectOutput(CbOutputs.SelectedItem.ToString());
         }
     }
 }
