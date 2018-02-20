@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Capturer\DesktopDuplication.cs" />
+    <Compile Include="Controllers\Threads\ThreadManager.cs" />
     <Compile Include="Controllers\Views\PanelController.cs" />
     <Compile Include="Views\PanelForm.cs">
       <SubType>Form</SubType>

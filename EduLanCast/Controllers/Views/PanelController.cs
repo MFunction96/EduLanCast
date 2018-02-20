@@ -1,6 +1,5 @@
 ﻿using EduLanCast.Controllers.Capturer;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,13 +33,6 @@ namespace EduLanCast.Controllers.Views
             }
         }
 
-        public async Task QueryOutputsAsync(string adapter)
-        {
-            var q = Duplication.Adapters1.First(tmp => tmp.Description1.Description == adapter);
-            Duplication.QueryOutputs(q);
-            await RefrushOutputs();
-        }
-
         private Task RefrushOutputs()
         {
             return Task.Run(() =>
@@ -52,6 +44,18 @@ namespace EduLanCast.Controllers.Views
                     Outputs.Add(output1.Description.DeviceName);
                 }
             });
+        }
+
+        public void Duplicate(string output)
+        {
+
+        }
+
+        public async Task QueryOutputsAsync(string adapter)
+        {
+            var q = Duplication.Adapters1.First(tmp => tmp.Description1.Description == adapter);
+            Duplication.QueryOutputs(q);
+            await RefrushOutputs();
         }
 
         public Task<string> SelectOutput(string output)
