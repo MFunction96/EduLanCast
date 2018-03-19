@@ -1,5 +1,5 @@
-﻿using EduLanCast.Controllers.Threads;
-using EduLanCast.Controllers.Views;
+﻿using EduLanCast.Controllers.Views;
+using EduLanCast.Data;
 using EduLanCast.Properties;
 using System;
 using System.Collections.Generic;
@@ -24,9 +24,10 @@ namespace EduLanCast.Views
         public PanelForm()
         {
             InitializeComponent();
+            StaticData.FormMgr.ManageObject[nameof(ParentForm)] = this;
             Fps = new List<int> { 1, 2, 5, 10, 20, 50, 100 };
             Controller = new PanelController();
-            ThreadManager.Threads["ShowDuplication"] = new Thread(ShowDuplication);
+            StaticData.ThreadMgr.ManageObject["ShowDuplication"] = new Thread(ShowDuplication);
             CbFps.DataSource = Fps;
             CbAdapters.DataSource = Controller.Adapters;
         }
@@ -34,8 +35,8 @@ namespace EduLanCast.Views
         private void BtnDemo_Click(object sender, EventArgs e)
         {
             Controller.InitDuplicate(CbAdapters.SelectedItem.ToString(), CbOutputs.SelectedItem.ToString());
-            ThreadManager.Threads["Duplication"].Start();
-            ThreadManager.Threads["ShowDuplication"].Start();
+            StaticData.ThreadMgr.ManageObject["Duplication"].Start();
+            StaticData.ThreadMgr.ManageObject["ShowDuplication"].Start();
         }
 
         private void ShowDuplication()
@@ -45,8 +46,8 @@ namespace EduLanCast.Views
 
         private void BtnStop_Click(object sender, EventArgs e)
         {
-            ThreadManager.Threads["ShowDuplication"].Interrupt();
-            ThreadManager.Threads["Duplication"].Interrupt();
+            StaticData.ThreadMgr.ManageObject["ShowDuplication"].Interrupt();
+            StaticData.ThreadMgr.ManageObject["Duplication"].Interrupt();
         }
 
         private async void CbAdapters_SelectedIndexChanged(object sender, EventArgs e)
@@ -61,9 +62,13 @@ namespace EduLanCast.Views
             Controller.Fps = (int)CbFps.SelectedItem;
         }
 
-        private void PanelForm_FormClosing(object sender, FormClosingEventArgs e)
+        private async void PanelForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ThreadManager.Terminate();
+            StaticData.FormMgr.ManageObject.Remove(nameof(ParentForm));
+            if (StaticData.FormMgr.ManageObject.Count == 0)
+            {
+                await StaticData.ThreadMgr.Terminate();
+            }
         }
 
         private async void CbOutputs_SelectedIndexChanged(object sender, EventArgs e)

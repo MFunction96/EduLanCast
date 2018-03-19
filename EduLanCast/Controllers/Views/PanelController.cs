@@ -1,10 +1,10 @@
 ﻿using EduLanCast.Controllers.Capturer;
+using EduLanCast.Data;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EduLanCast.Controllers.Threads;
 
 namespace EduLanCast.Controllers.Views
 {
@@ -40,7 +40,7 @@ namespace EduLanCast.Controllers.Views
             Outputs = new List<string>();
             RefrushAdapters();
             RefrushOutputs();
-            ThreadManager.Threads["Duplication"] = new Thread(Duplication.Duplicate);
+            StaticData.ThreadMgr.ManageObject["Duplication"] = new Thread(Duplication.Duplicate);
         }
         /// <summary>
         /// 
