@@ -1,20 +1,38 @@
 ﻿using EduLanCast.Controllers.Capturer;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using EduLanCast.Controllers.Threads;
 
 namespace EduLanCast.Controllers.Views
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class PanelController
     {
         private DesktopDuplication Duplication { get; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public int Fps { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public IList<string> Adapters { get; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public IList<string> Outputs { get; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public Bitmap Screen;
+        /// <summary>
+        /// 
+        /// </summary>
         public PanelController()
         {
             Duplication = new DesktopDuplication();
@@ -22,8 +40,11 @@ namespace EduLanCast.Controllers.Views
             Outputs = new List<string>();
             RefrushAdapters();
             RefrushOutputs();
+            ThreadManager.Threads["Duplication"] = new Thread(Duplication.Duplicate);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         private void RefrushAdapters()
         {
             Adapters.Clear();
@@ -32,7 +53,10 @@ namespace EduLanCast.Controllers.Views
                 Adapters.Add(adapter1.Description1.Description);
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private Task RefrushOutputs()
         {
             return Task.Run(() =>
@@ -45,19 +69,33 @@ namespace EduLanCast.Controllers.Views
                 }
             });
         }
-
-        public void Duplicate(string output)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="adapter"></param>
+        /// <param name="output"></param>
+        public void InitDuplicate(string adapter, string output)
         {
-
+            var ad = Duplication.Adapters1.First(tmp => tmp.Description1.Description == adapter);
+            var ou = Duplication.Outputs.First(tmp => tmp.Description.DeviceName == output);
+            Duplication.InitDuplication(ad, ou, ref Screen, 1000 / Fps);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="adapter"></param>
+        /// <returns></returns>
         public async Task QueryOutputsAsync(string adapter)
         {
             var q = Duplication.Adapters1.First(tmp => tmp.Description1.Description == adapter);
             Duplication.QueryOutputs(q);
             await RefrushOutputs();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="output"></param>
+        /// <returns></returns>
         public Task<string> SelectOutput(string output)
         {
             return Task.Run(() =>

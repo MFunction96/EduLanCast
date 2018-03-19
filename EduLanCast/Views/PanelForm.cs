@@ -10,35 +10,43 @@ namespace EduLanCast.Views
 {
     public partial class PanelForm : Form
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private IList<int> Fps { get; }
-        private int Interval { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         private PanelController Controller { get; }
-
+        /// <inheritdoc />
+        /// <summary>
+        /// </summary>
         public PanelForm()
         {
             InitializeComponent();
             Fps = new List<int> { 1, 2, 5, 10, 20, 50, 100 };
             Controller = new PanelController();
-            ThreadManager.Threads["CaptureScreen"] = new Thread(ShowScreen) {Name = "CaptureScreen"};
+            ThreadManager.Threads["ShowDuplication"] = new Thread(ShowDuplication);
             CbFps.DataSource = Fps;
-            Interval = (int)CbFps.SelectedItem;
             CbAdapters.DataSource = Controller.Adapters;
         }
 
         private void BtnDemo_Click(object sender, EventArgs e)
         {
-            ThreadManager.Threads["CaptureScreen"].Start();
+            Controller.InitDuplicate(CbAdapters.SelectedItem.ToString(), CbOutputs.SelectedItem.ToString());
+            ThreadManager.Threads["Duplication"].Start();
+            ThreadManager.Threads["ShowDuplication"].Start();
         }
 
-        private void ShowScreen()
+        private void ShowDuplication()
         {
-            Controller.Duplicate(CbOutputs.SelectedItem.ToString());
-            Thread.Sleep(Interval);
+            PbScreen.Image = Controller.Screen;
         }
 
         private void BtnStop_Click(object sender, EventArgs e)
         {
-            ThreadManager.Threads["CaptureScreen"].Interrupt();
+            ThreadManager.Threads["ShowDuplication"].Interrupt();
+            ThreadManager.Threads["Duplication"].Interrupt();
         }
 
         private async void CbAdapters_SelectedIndexChanged(object sender, EventArgs e)
@@ -50,7 +58,6 @@ namespace EduLanCast.Views
 
         private void CbFps_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Interval = (int)CbFps.SelectedItem;
             Controller.Fps = (int)CbFps.SelectedItem;
         }
 

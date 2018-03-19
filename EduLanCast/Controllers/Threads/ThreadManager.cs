@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace EduLanCast.Controllers.Threads
 {
@@ -12,12 +13,26 @@ namespace EduLanCast.Controllers.Threads
             Threads = new Dictionary<string, Thread>();
         }
 
-        public static void Terminate()
+        public static Task Terminate()
         {
-            foreach (var thread in Threads)
+            return Task.Run(() =>
             {
-                thread.Value.Interrupt();
-            }
+                foreach (var thread in Threads)
+                {
+                    thread.Value.Interrupt();
+                }
+            });
+        }
+
+        public static Task Start()
+        {
+            return Task.Run(() =>
+            {
+                foreach (var thread in Threads)
+                {
+                    thread.Value.Start();
+                }
+            });
         }
     }
 }
