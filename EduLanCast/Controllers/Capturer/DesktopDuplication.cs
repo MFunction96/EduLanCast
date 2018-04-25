@@ -6,11 +6,15 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
+using System.Threading.Tasks;
+using EduLanCast.Data;
+using EduLanCast.Services;
+using SharpDX.Direct3D;
 using Device = SharpDX.Direct3D11.Device;
 
 namespace EduLanCast.Controllers.Capturer
 {
-    public class DesktopDuplication
+    public class DesktopDuplication :ITerminate
     {
         /// <summary>
         /// 
@@ -67,6 +71,7 @@ namespace EduLanCast.Controllers.Capturer
         {
             Factory = new Factory1();
             Adapters1 = Factory.Adapters1;
+            StaticData.ThreadMgr.ManageObject["CaptureScreen"] = new Thread(Duplicate);
         }
         /// <summary>
         /// 
@@ -98,7 +103,27 @@ namespace EduLanCast.Controllers.Capturer
         {
             SelectedAdapter = adapter1;
             SelectedOutput = output;
-            Device = new Device(SelectedAdapter);
+            if (!(Enum.GetValues(typeof(DriverType)) is int[] drivertypes)) throw new NullReferenceException();
+            var featurelevels = new[]
+            {
+                FeatureLevel.Level_11_0,
+                FeatureLevel.Level_10_1,
+                FeatureLevel.Level_10_0,
+                FeatureLevel.Level_9_1
+            };
+            foreach (var dt in drivertypes)
+            {
+                try
+                {
+                    Device = new Device((DriverType) dt, DeviceCreationFlags.None, featurelevels);
+
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
+            
             TextureDesc = new Texture2DDescription
             {
                 CpuAccessFlags = CpuAccessFlags.Read,
@@ -143,6 +168,8 @@ namespace EduLanCast.Controllers.Capturer
                     destPtr = IntPtr.Add(destPtr, mapDest.Stride);
                     // Release source and dest locks
                     _bitmap.UnlockBits(mapDest);
+                    StaticData.Buffer.Enqueue(_bitmap);
+                    _bitmap.Dispose();
                     Device.ImmediateContext.UnmapSubresource(ScreenTexture, 0);
                 }
                 screenresource.Dispose();
@@ -156,6 +183,14 @@ namespace EduLanCast.Controllers.Capturer
                 }
             }
             Thread.Sleep(Interval);
+        }
+        /// <inheritdoc />
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public Task Terminate()
+        {
+            return Task.Run(() => { StaticData.ThreadMgr.ManageObject["CaptureScreen"].Interrupt(); });
         }
     }
 }
