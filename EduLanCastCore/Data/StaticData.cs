@@ -1,6 +1,4 @@
 ﻿using EduLanCastCore.Controllers.Managers;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Threading.Tasks;
 
 namespace EduLanCastCore.Data
@@ -15,21 +13,11 @@ namespace EduLanCastCore.Data
         /// </summary>
         public static ThreadManager ThreadMgr { get; }
         /// <summary>
-        /// 窗体管理器
-        /// </summary>
-        public static FormManager FormMgr { get; }
-        /// <summary>
-        /// 缓冲队列。
-        /// </summary>
-        public static Queue<Bitmap> Buffer { get; }
-        /// <summary>
         /// 全局数据构造函数。
         /// </summary>
         static StaticData()
         {
             ThreadMgr = new ThreadManager();
-            FormMgr = new FormManager();
-            Buffer = new Queue<Bitmap>();
         }
         /// <summary>
         /// 全局数据终止任务。
@@ -40,8 +28,6 @@ namespace EduLanCastCore.Data
         public static async Task Terminate()
         {
             await ThreadMgr.Terminate();
-            await FormMgr.Terminate();
-            Buffer.Clear();
         }
     }
 }
