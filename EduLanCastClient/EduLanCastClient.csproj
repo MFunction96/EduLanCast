@@ -93,5 +93,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EduLanCastCore\EduLanCastCore.csproj">
+      <Project>{923a2ea9-eb4b-486c-844e-73a57a0a68ed}</Project>
+      <Name>EduLanCastCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
