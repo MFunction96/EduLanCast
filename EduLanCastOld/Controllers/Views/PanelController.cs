@@ -1,12 +1,12 @@
-﻿using EduLanCast.Controllers.Capturer;
-using EduLanCast.Data;
+﻿using EduLanCastOld.Controllers.Capturer;
+using EduLanCastOld.Data;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EduLanCast.Controllers.Views
+namespace EduLanCastOld.Controllers.Views
 {
     /// <summary>
     /// 面板控制器。

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace EduLanCast.Services
+namespace EduLanCastOld.Services
 {
     /// <summary>
     /// 任务结束接口。

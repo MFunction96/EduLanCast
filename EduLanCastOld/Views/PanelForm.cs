@@ -1,12 +1,12 @@
-﻿using EduLanCast.Controllers.Views;
-using EduLanCast.Data;
-using EduLanCast.Properties;
+﻿using EduLanCastOld.Controllers.Views;
+using EduLanCastOld.Data;
+using EduLanCastOld.Properties;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace EduLanCast.Views
+namespace EduLanCastOld.Views
 {
     /// <inheritdoc />
     /// <summary>

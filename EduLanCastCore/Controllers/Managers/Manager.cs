@@ -1,8 +1,8 @@
-﻿using EduLanCast.Services;
+﻿using EduLanCastCore.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace EduLanCast.Controllers.Managers
+namespace EduLanCastCore.Controllers.Managers
 {
     /// <inheritdoc />
     /// <summary>

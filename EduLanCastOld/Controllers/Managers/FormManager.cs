@@ -1,17 +1,17 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace EduLanCast.Controllers.Managers
+namespace EduLanCastOld.Controllers.Managers
 {
     /// <inheritdoc />
     /// <summary>
-    /// 线程管理模块。
+    /// 窗体管理器。
     /// </summary>
-    public class ThreadManager : Manager<Thread>
+    public class FormManager : Manager<Form>
     {
         /// <inheritdoc />
         /// <summary>
-        /// 线程管理器启动核心逻辑。
+        /// 窗体管理器启动核心逻辑。
         /// </summary>
         /// <param name="obj">
         /// 操作的单一对象。
@@ -19,13 +19,13 @@ namespace EduLanCast.Controllers.Managers
         /// <returns>
         /// 异步任务运行状态。
         /// </returns>
-        protected override Task StartCore(Thread obj)
+        protected override Task StartCore(Form obj)
         {
-            return Task.Run(() => { obj.Start(); });
+            return Task.Run(() => { obj.Show(); });
         }
         /// <inheritdoc />
         /// <summary>
-        /// 线程管理器终止核心逻辑。
+        /// 窗体管理器终止核心逻辑。
         /// </summary>
         /// <param name="obj">
         /// 操作的单一对象。
@@ -33,9 +33,9 @@ namespace EduLanCast.Controllers.Managers
         /// <returns>
         /// 异步任务运行状态。
         /// </returns>
-        protected override Task TerminateCore(Thread obj)
+        protected override Task TerminateCore(Form obj)
         {
-            return Task.Run(() => { obj.Interrupt(); });
+            return Task.Run(() => { obj.Close(); });
         }
     }
 }

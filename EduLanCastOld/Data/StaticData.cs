@@ -1,9 +1,9 @@
-﻿using EduLanCast.Controllers.Managers;
+﻿using EduLanCastOld.Controllers.Managers;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
 
-namespace EduLanCast.Data
+namespace EduLanCastOld.Data
 {
     /// <summary>
     /// 全局数据类。

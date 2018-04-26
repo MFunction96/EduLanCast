@@ -1,8 +1,8 @@
-﻿using EduLanCast.Views;
+﻿using EduLanCastOld.Views;
 using System;
 using System.Windows.Forms;
 
-namespace EduLanCast
+namespace EduLanCastOld
 {
     internal static class Program
     {

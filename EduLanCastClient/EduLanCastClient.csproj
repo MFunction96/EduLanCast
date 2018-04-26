@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{00CED1B4-3B2C-480A-BAC3-B2389972CD77}</ProjectGuid>
+    <ProjectGuid>{86C64134-E1A5-4BB5-A549-712A7BC5B3FB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>EduLanCast</RootNamespace>
-    <AssemblyName>EduLanCast</AssemblyName>
+    <RootNamespace>EduLanCastClient</RootNamespace>
+    <AssemblyName>EduLanCastClient</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

@@ -7,12 +7,12 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
 using System.Threading.Tasks;
-using EduLanCast.Data;
-using EduLanCast.Services;
+using EduLanCastOld.Data;
+using EduLanCastOld.Services;
 using SharpDX.Direct3D;
 using Device = SharpDX.Direct3D11.Device;
 
-namespace EduLanCast.Controllers.Capturer
+namespace EduLanCastOld.Controllers.Capturer
 {
     public class DesktopDuplication :ITerminate
     {
