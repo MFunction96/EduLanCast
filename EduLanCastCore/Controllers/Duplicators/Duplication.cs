@@ -77,9 +77,7 @@ namespace EduLanCastCore.Controllers.Duplicators
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="adapter"></param>
-        /// <param name="output"></param>
-        public void Start(string adapter, string output)
+        public void Start()
         {
             DxModel.Device = new Device(DxModel.SelectedAdapter);
             var output1 = DxModel.SelectedOutput.QueryInterface<Output1>();
