@@ -1,4 +1,5 @@
-﻿using EduLanCastOld.Controllers.Capturer;
+﻿using System;
+using EduLanCastOld.Controllers.Capturer;
 using EduLanCastOld.Data;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,7 +12,7 @@ namespace EduLanCastOld.Controllers.Views
     /// <summary>
     /// 面板控制器。
     /// </summary>
-    public class PanelController
+    public class PanelController : IDisposable
     {
         /// <summary>
         /// 桌面复制核心对象。
@@ -125,6 +126,39 @@ namespace EduLanCastOld.Controllers.Views
                 var screen = Duplication.SelectOutput(output1);
                 return $"{screen.Width}x{screen.Height}";
             });
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        ~PanelController()
+        {
+            Dispose(false);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            ReleaseUnmanagedResources();
+            if (!disposing) return;
+            Screen?.Dispose();
+            Duplication?.Dispose();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        protected void ReleaseUnmanagedResources()
+        {
+
+        }
+        /// <inheritdoc />
+        /// <summary>
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

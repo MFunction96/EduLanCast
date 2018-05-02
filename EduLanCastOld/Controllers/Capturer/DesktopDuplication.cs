@@ -14,7 +14,7 @@ using Device = SharpDX.Direct3D11.Device;
 
 namespace EduLanCastOld.Controllers.Capturer
 {
-    public class DesktopDuplication :ITerminate
+    public class DesktopDuplication : ITerminate,IDisposable
     {
         /// <summary>
         /// 
@@ -35,35 +35,35 @@ namespace EduLanCastOld.Controllers.Capturer
         /// <summary>
         /// 
         /// </summary>
-        private Adapter1 SelectedAdapter { get; set; }
+        protected Adapter1 SelectedAdapter { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        private Output SelectedOutput { get; set; }
+        protected Output SelectedOutput { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        private Device Device { get; set; }
+        protected Device Device { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        private Texture2DDescription TextureDesc { get; set; }
+        protected Texture2DDescription TextureDesc { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        private Bitmap _bitmap;
+        protected Bitmap Bitmap;
         /// <summary>
         /// 
         /// </summary>
-        private int Interval { get; set; }
+        protected int Interval { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        private OutputDuplication DuplicatedOutput { get; set; }
+        protected OutputDuplication DuplicatedOutput { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        private Texture2D ScreenTexture { get; set; }
+        protected Texture2D ScreenTexture { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -139,7 +139,7 @@ namespace EduLanCastOld.Controllers.Capturer
             };
             ScreenTexture = new Texture2D(Device, TextureDesc);
             DuplicatedOutput = SelectedOutput.QueryInterface<Output1>().DuplicateOutput(Device);
-            _bitmap = bitmap;
+            Bitmap = bitmap;
             Interval = interval;
         }
         /// <summary>
@@ -153,9 +153,9 @@ namespace EduLanCastOld.Controllers.Capturer
                 var screenTexture2D = screenresource.QueryInterface<Texture2D>();
                 Device.ImmediateContext.CopyResource(screenTexture2D, ScreenTexture);
                 var mapSource = Device.ImmediateContext.MapSubresource(ScreenTexture, 0, MapMode.Read, SharpDX.Direct3D11.MapFlags.None);
-                _bitmap = new Bitmap(ScreenDpi.Width, ScreenDpi.Height, PixelFormat.Format32bppArgb);
+                Bitmap = new Bitmap(ScreenDpi.Width, ScreenDpi.Height, PixelFormat.Format32bppArgb);
                 var boundsRect = new Rectangle(0, 0, ScreenDpi.Width, ScreenDpi.Height);
-                var mapDest = _bitmap.LockBits(boundsRect, ImageLockMode.WriteOnly, _bitmap.PixelFormat);
+                var mapDest = Bitmap.LockBits(boundsRect, ImageLockMode.WriteOnly, Bitmap.PixelFormat);
                 var sourcePtr = mapSource.DataPointer;
                 var destPtr = mapDest.Scan0;
                 for (var y = 0; y < ScreenDpi.Height; y++)
@@ -167,9 +167,9 @@ namespace EduLanCastOld.Controllers.Capturer
                     sourcePtr = IntPtr.Add(sourcePtr, mapSource.RowPitch);
                     destPtr = IntPtr.Add(destPtr, mapDest.Stride);
                     // Release source and dest locks
-                    _bitmap.UnlockBits(mapDest);
-                    StaticData.Buffer.Enqueue(_bitmap);
-                    _bitmap.Dispose();
+                    Bitmap.UnlockBits(mapDest);
+                    StaticData.Buffer.Enqueue(Bitmap);
+                    Bitmap.Dispose();
                     Device.ImmediateContext.UnmapSubresource(ScreenTexture, 0);
                 }
                 screenresource.Dispose();
@@ -191,6 +191,48 @@ namespace EduLanCastOld.Controllers.Capturer
         public Task Terminate()
         {
             return Task.Run(() => { StaticData.ThreadMgr.ManageObject["CaptureScreen"].Interrupt(); });
+        }
+        /// <summary>
+        /// 析构函数。
+        /// </summary>
+        ~DesktopDuplication()
+        {
+            Dispose(false);
+        }
+        /// <summary>
+        /// 根据析构类型，选取析构方式。
+        /// </summary>
+        /// <param name="disposing">
+        /// true表示主动析构。
+        /// false表示被动析构。
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            ReleaseUnmanagedResources();
+            if (!disposing) return;
+            Bitmap?.Dispose();
+            Factory?.Dispose();
+            SelectedAdapter?.Dispose();
+            SelectedOutput?.Dispose();
+            Device?.Dispose();
+            DuplicatedOutput?.Dispose();
+            ScreenTexture?.Dispose();
+        }
+        /// <summary>
+        /// 释放非托管资源。
+        /// </summary>
+        protected void ReleaseUnmanagedResources()
+        {
+            
+        }
+        /// <inheritdoc />
+        /// <summary>
+        /// 析构对象。
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

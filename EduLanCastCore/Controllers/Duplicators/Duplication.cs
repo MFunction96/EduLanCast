@@ -1,4 +1,5 @@
 ﻿using EduLanCastCore.Data;
+using EduLanCastCore.Interfaces;
 using EduLanCastCore.Models.Duplicators;
 using SharpDX;
 using SharpDX.Direct3D11;
@@ -14,10 +15,11 @@ using MapFlags = SharpDX.Direct3D11.MapFlags;
 
 namespace EduLanCastCore.Controllers.Duplicators
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="ITerminate"/>
+    /// <inheritdoc cref="IDisposable" />
     /// <summary>
     /// </summary>
-    public class Duplication : IDisposable
+    public class Duplication : IDisposable, ITerminate
     {
         /// <summary>
         /// 
@@ -26,7 +28,7 @@ namespace EduLanCastCore.Controllers.Duplicators
         /// <summary>
         /// 
         /// </summary>
-        public BlockingCollection<BitMapCollection> DuplBuffer { get; }
+        private BlockingCollection<BitMapCollection> DuplBuffer { get; }
         /// <summary>
         /// 
         /// </summary>
@@ -34,11 +36,16 @@ namespace EduLanCastCore.Controllers.Duplicators
         /// <summary>
         /// 
         /// </summary>
-        public Rectangle ScreenDpi { get; set; }
+        public Rectangle ScreenDpi { get; private set; }
         /// <summary>
         /// 
         /// </summary>
         public int Interval { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected bool Duplicating;
         /// <summary>
         /// 
         /// </summary>
@@ -103,6 +110,8 @@ namespace EduLanCastCore.Controllers.Duplicators
             {
                 throw new NotSupportedException("Desktop Duplication is not supported on this system.\nIf you have multiple graphic cards, try running Captura on integrated graphics.", e);
             }
+
+            Duplicating = true;
             DxModel.ScreenTexture = new Texture2D(DxModel.Device, textureDesc);
             StaticData.ThreadMgr.ManageObject["Duplicator"].Start();
         }
@@ -112,7 +121,7 @@ namespace EduLanCastCore.Controllers.Duplicators
         /// <param name="sourcePtr"></param>
         /// <param name="sourceRowPitch"></param>
         /// <returns></returns>
-        private Bitmap ProcessFrame(IntPtr sourcePtr, int sourceRowPitch)
+        protected Bitmap ProcessFrame(IntPtr sourcePtr, int sourceRowPitch)
         {
             var frame = new Bitmap(ScreenDpi.Width, ScreenDpi.Height, PixelFormat.Format32bppRgb);
 
@@ -138,7 +147,7 @@ namespace EduLanCastCore.Controllers.Duplicators
         /// <summary>
         /// 
         /// </summary>
-        private void ReleaseFrame()
+        protected void ReleaseFrame()
         {
             try
             {
@@ -156,64 +165,104 @@ namespace EduLanCastCore.Controllers.Duplicators
         /// <summary>
         /// 
         /// </summary>
-        public void Capture()
+        protected void Capture()
         {
-            SharpDX.DXGI.Resource desktopResource;
-
-            try
+            while (Duplicating)
             {
-                DxModel.DuplicatedOutput.AcquireNextFrame(1000, out DxModel.FrameInfo, out desktopResource);
-            }
+                SharpDX.DXGI.Resource desktopResource;
 
-            catch (SharpDXException e) when (e.ResultCode.Failure)
-            {
-                throw new Exception("Failed to acquire next frame.", e);
-            }
-
-            using (desktopResource)
-            {
-                using (var tempTexture = desktopResource.QueryInterface<Texture2D>())
+                try
                 {
-                    var resourceRegion = new ResourceRegion(ScreenDpi.Left, ScreenDpi.Top, 0, ScreenDpi.Right, ScreenDpi.Bottom, 1);
-
-                    DxModel.Device.ImmediateContext.CopySubresourceRegion(tempTexture, 0, resourceRegion, DxModel.TextureDesc, 0);
+                    DxModel.DuplicatedOutput.AcquireNextFrame(1000, out DxModel.FrameInfo, out desktopResource);
                 }
-            }
 
-            ReleaseFrame();
-
-            var mapSource = DxModel.Device.ImmediateContext.MapSubresource(DxModel.TextureDesc, 0, MapMode.Read, MapFlags.None);
-
-            try
-            {
-                DuplBuffer.TryAdd(new BitMapCollection
+                catch (SharpDXException e) when (e.ResultCode.Failure)
                 {
-                    Picture = ProcessFrame(mapSource.DataPointer, mapSource.RowPitch),
-                    TimeStamp = DateTime.Now
-                });
+                    throw new Exception("Failed to acquire next frame.", e);
+                }
+
+                using (desktopResource)
+                {
+                    using (var tempTexture = desktopResource.QueryInterface<Texture2D>())
+                    {
+                        var resourceRegion = new ResourceRegion(ScreenDpi.Left, ScreenDpi.Top, 0, ScreenDpi.Right, ScreenDpi.Bottom, 1);
+
+                        DxModel.Device.ImmediateContext.CopySubresourceRegion(tempTexture, 0, resourceRegion, DxModel.TextureDesc, 0);
+                    }
+                }
+
+                ReleaseFrame();
+
+                var mapSource = DxModel.Device.ImmediateContext.MapSubresource(DxModel.TextureDesc, 0, MapMode.Read, MapFlags.None);
+
+                try
+                {
+                    DuplBuffer.TryAdd(new BitMapCollection
+                    {
+                        Picture = ProcessFrame(mapSource.DataPointer, mapSource.RowPitch),
+                        TimeStamp = DateTime.Now
+                    });
+                }
+                finally
+                {
+                    DxModel.Device.ImmediateContext.UnmapSubresource(DxModel.TextureDesc, 0);
+                }
+                DuplAction(DuplBuffer);
+                Thread.Sleep(Interval);
             }
-            finally
-            {
-                DxModel.Device.ImmediateContext.UnmapSubresource(DxModel.TextureDesc, 0);
-            }
-            DuplAction(DuplBuffer);
-            Thread.Sleep(Interval);
+
         }
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
+        /// <returns></returns>
+        public Task Terminate()
+        {
+            return Task.Run(() =>
+            {
+                Duplicating = false;
+            });
+        }
+        /// <summary>
+        /// 析构函数。
+        /// </summary>
+        ~Duplication()
+        {
+            Dispose(false);
+        }
+        /// <summary>
+        /// 根据析构类型，选取析构方式。
+        /// </summary>
+        /// <param name="disposing">
+        /// true表示主动析构。
+        /// false表示被动析构。
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            ReleaseUnmanagedResources();
+            if (disposing)
+            {
+                DuplBuffer?.Dispose();
+            }
+        }
+        /// <summary>
+        /// 释放非托管资源。
+        /// </summary>
+        protected void ReleaseUnmanagedResources()
+        {
+            DxModel.DuplicatedOutput?.Dispose();
+            DxModel.TextureDesc?.Dispose();
+            DxModel.Device?.Dispose();
+        }
+        /// <inheritdoc />
+        /// <summary>
+        /// 析构对象。
+        /// </summary>
         public void Dispose()
         {
-            try
-            {
-                DxModel.DuplicatedOutput?.Dispose();
-                DxModel.TextureDesc?.Dispose();
-                DxModel.Device?.Dispose();
-            }
-            catch
-            {
-                // ignored
-            }
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

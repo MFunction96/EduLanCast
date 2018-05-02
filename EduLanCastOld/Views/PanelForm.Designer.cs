@@ -1,4 +1,4 @@
-﻿namespace EduLanCast.Views
+﻿namespace EduLanCastOld.Views
 {
     partial class PanelForm
     {

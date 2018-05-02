@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EduLanCastCore.Services;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -10,48 +11,6 @@ namespace EduLanCastCore.Models.Duplicators
     /// </summary>
     public static class MouseCursor
     {
-        [StructLayout(LayoutKind.Sequential)]
-        private struct IconInfo
-        {
-            private readonly bool fIcon;
-            public readonly int xHotspot;
-            public readonly int yHotspot;
-            public readonly IntPtr hbmMask;
-            public readonly IntPtr hbmColor;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct CursorInfo
-        {
-            public int cbSize;
-            public readonly int flags;
-            public readonly IntPtr hCursor;
-            public Point ptScreenPos;
-        }
-
-        #region PInvoke
-
-        private const string DllName = "user32.dll";
-
-        [DllImport(DllName)]
-        private static extern bool DestroyIcon(IntPtr hIcon);
-
-        [DllImport(DllName)]
-        private static extern IntPtr CopyIcon(IntPtr hIcon);
-
-        [DllImport(DllName)]
-        private static extern bool GetCursorInfo(out CursorInfo pci);
-
-        [DllImport(DllName)]
-        private static extern bool GetIconInfo(IntPtr hIcon, out IconInfo piconinfo);
-
-        [DllImport(DllName)]
-        private static extern bool GetCursorPos(ref Point lpPoint);
-
-        [DllImport("gdi32.dll")]
-        private static extern bool DeleteObject(IntPtr hObject);
-        #endregion
-
         private const int CursorShowing = 1;
                 
         /// <summary>
@@ -62,13 +21,13 @@ namespace EduLanCastCore.Models.Duplicators
             get
             {
                 var p = new Point();
-                GetCursorPos(ref p);
+                NativeMethods.GetCursorPos(ref p);
                 return p;
             }
         }
 
         // hCursor -> (Icon, Hotspot)
-        static readonly Dictionary<IntPtr, Tuple<Bitmap, Point>> Cursors = new Dictionary<IntPtr, Tuple<Bitmap, Point>>();
+        private static readonly Dictionary<IntPtr, Tuple<Bitmap, Point>> Cursors = new Dictionary<IntPtr, Tuple<Bitmap, Point>>();
         
         /// <summary>
         /// Draws this overlay.
@@ -79,9 +38,9 @@ namespace EduLanCastCore.Models.Duplicators
         {
             // ReSharper disable once RedundantAssignment
             // ReSharper disable once InlineOutVariableDeclaration
-            var cursorInfo = new CursorInfo { cbSize = Marshal.SizeOf<CursorInfo>() };
+            var cursorInfo = new NativeMethods.CursorInfo { cbSize = Marshal.SizeOf<NativeMethods.CursorInfo>() };
 
-            if (!GetCursorInfo(out cursorInfo))
+            if (!NativeMethods.GetCursorInfo(out cursorInfo))
                 return;
 
             if (cursorInfo.flags != CursorShowing)
@@ -99,12 +58,12 @@ namespace EduLanCastCore.Models.Duplicators
             }
             else
             {
-                var hIcon = CopyIcon(cursorInfo.hCursor);
+                var hIcon = NativeMethods.CopyIcon(cursorInfo.hCursor);
 
                 if (hIcon == IntPtr.Zero)
                     return;
 
-                if (!GetIconInfo(hIcon, out var icInfo))
+                if (!NativeMethods.GetIconInfo(hIcon, out var icInfo))
                     return;
 
                 icon = Icon.FromHandle(hIcon).ToBitmap();
@@ -112,10 +71,10 @@ namespace EduLanCastCore.Models.Duplicators
 
                 Cursors.Add(cursorInfo.hCursor, Tuple.Create(icon, hotspot));
 
-                DestroyIcon(hIcon);
+                NativeMethods.DestroyIcon(hIcon);
 
-                DeleteObject(icInfo.hbmColor);
-                DeleteObject(icInfo.hbmMask);
+                NativeMethods.DeleteObject(icInfo.hbmColor);
+                NativeMethods.DeleteObject(icInfo.hbmMask);
             }
 
             var location = new Point(cursorInfo.ptScreenPos.X - hotspot.X,

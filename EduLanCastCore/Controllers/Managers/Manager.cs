@@ -1,6 +1,6 @@
-﻿using EduLanCastCore.Services;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using EduLanCastCore.Interfaces;
 
 namespace EduLanCastCore.Controllers.Managers
 {
