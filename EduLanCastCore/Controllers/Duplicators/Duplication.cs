@@ -18,36 +18,36 @@ namespace EduLanCastCore.Controllers.Duplicators
     /// <inheritdoc cref="ITerminate"/>
     /// <inheritdoc cref="IDisposable" />
     /// <summary>
+    /// 桌面复制类。
     /// </summary>
     public class Duplication : IDisposable, ITerminate
     {
         /// <summary>
-        /// 
+        /// 桌面复制执行委托。
         /// </summary>
         public Action<BlockingCollection<BitMapCollection>> DuplAction { get; set; }
         /// <summary>
-        /// 
+        /// 线程同步容器。
         /// </summary>
         private BlockingCollection<BitMapCollection> DuplBuffer { get; }
         /// <summary>
-        /// 
+        /// DirectX模块。
         /// </summary>
         public DxModel DxModel { get; }
         /// <summary>
-        /// 
+        /// 桌面分辨率。
         /// </summary>
         public Rectangle ScreenDpi { get; private set; }
         /// <summary>
-        /// 
+        /// 线程执行间隔。
         /// </summary>
-        public int Interval { get; set; }
-
+        protected int Interval { get; set; }
         /// <summary>
-        /// 
+        /// 复制线程运行状态。
         /// </summary>
         protected bool Duplicating;
         /// <summary>
-        /// 
+        /// 桌面复制类构造函数。
         /// </summary>
         public Duplication()
         {
@@ -56,17 +56,21 @@ namespace EduLanCastCore.Controllers.Duplicators
             StaticData.ThreadMgr.ManageObject["Duplicator"] = new Thread(Capture);
         }
         /// <summary>
-        /// 
+        /// 选择适配器。
         /// </summary>
-        /// <param name="adapter"></param>
+        /// <param name="adapter">
+        /// 适配器名称。
+        /// </param>
         public void SelectAdapter(string adapter)
         {
             DxModel.SelectAdapter(adapter);
         }
         /// <summary>
-        /// 
+        /// 选择输出设备。
         /// </summary>
-        /// <param name="output"></param>
+        /// <param name="output">
+        /// 输出设备名称。
+        /// </param>
         public void SelectOutput(string output)
         {
             DxModel.SelectOutput(output);
@@ -75,9 +79,12 @@ namespace EduLanCastCore.Controllers.Duplicators
                 DxModel.SelectedOutput.Description.DesktopBounds.Bottom - DxModel.SelectedOutput.Description.DesktopBounds.Top);
         }
         /// <summary>
-        /// 
+        /// 启动桌面复制。
         /// </summary>
-        public void Start()
+        /// <param name="dpi">
+        /// 复制帧数。
+        /// </param>
+        public void Start(int dpi)
         {
             DxModel.Device = new Device(DxModel.SelectedAdapter);
             var output1 = DxModel.SelectedOutput.QueryInterface<Output1>();
@@ -111,14 +118,21 @@ namespace EduLanCastCore.Controllers.Duplicators
 
             Duplicating = true;
             DxModel.ScreenTexture = new Texture2D(DxModel.Device, textureDesc);
+            Interval = 1000 / dpi;
             StaticData.ThreadMgr.ManageObject["Duplicator"].Start();
         }
         /// <summary>
-        /// 
+        /// 提取运算图形框架。
         /// </summary>
-        /// <param name="sourcePtr"></param>
-        /// <param name="sourceRowPitch"></param>
-        /// <returns></returns>
+        /// <param name="sourcePtr">
+        /// 首指针。
+        /// </param>
+        /// <param name="sourceRowPitch">
+        /// 指针长度。
+        /// </param>
+        /// <returns>
+        /// 位图像。
+        /// </returns>
         protected Bitmap ProcessFrame(IntPtr sourcePtr, int sourceRowPitch)
         {
             var frame = new Bitmap(ScreenDpi.Width, ScreenDpi.Height, PixelFormat.Format32bppRgb);
@@ -143,7 +157,7 @@ namespace EduLanCastCore.Controllers.Duplicators
             return frame;
         }
         /// <summary>
-        /// 
+        /// 释放图形框架。
         /// </summary>
         protected void ReleaseFrame()
         {
@@ -161,7 +175,7 @@ namespace EduLanCastCore.Controllers.Duplicators
         }
 
         /// <summary>
-        /// 
+        /// 屏幕捕捉核心线程。
         /// </summary>
         protected void Capture()
         {
@@ -213,8 +227,11 @@ namespace EduLanCastCore.Controllers.Duplicators
 
         /// <inheritdoc />
         /// <summary>
+        /// 终止桌面复制。
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// 异步任务运行状态。
+        /// </returns>
         public Task Terminate()
         {
             return Task.Run(() =>

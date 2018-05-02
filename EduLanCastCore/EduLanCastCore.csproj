@@ -57,9 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Duplicators\Duplication.cs" />
+    <Compile Include="Controllers\Duplicators\Presentation.cs" />
     <Compile Include="Controllers\Managers\Manager.cs" />
     <Compile Include="Controllers\Managers\ThreadManager.cs" />
     <Compile Include="Data\StaticData.cs" />
+    <Compile Include="Models\Configs\DuplConfig.cs" />
     <Compile Include="Models\Duplicators\BitMapCollection.cs" />
     <Compile Include="Models\Duplicators\DxModel.cs" />
     <Compile Include="Models\Duplicators\MouseCursor.cs" />
@@ -67,11 +69,11 @@
     <Compile Include="Interfaces\ITerminate.cs" />
     <Compile Include="Services\NativeMethods.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Configs\DuplConfig.json" />
     <None Include="packages.config" />
+    <None Include="Resources\Resources.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
