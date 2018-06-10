@@ -56,8 +56,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Drawcontrol\DrawingFunc\Chalk.cs" />
+    <Compile Include="Controllers\Drawcontrol\DrawingFunc\Eraser.cs" />
+    <Compile Include="Controllers\Drawcontrol\DrawingFunc\Tooltype.cs" />
+    <Compile Include="Controllers\Drawcontrol\Pointtrace.cs" />
+    <Compile Include="Models\Drawmodel\Canvainfo.cs" />
+    <Compile Include="Controllers\Drawcontrol\CloneTool.cs" />
     <Compile Include="Controllers\Drawcontrol\Drawing.cs" />
     <Compile Include="Controllers\Drawcontrol\Initdetail.cs" />
+    <Compile Include="Controllers\Drawcontrol\MathTool.cs" />
     <Compile Include="Models\Drawmodel\Strokedata.cs" />
     <Compile Include="Models\Drawmodel\Pointdata.cs" />
     <Compile Include="Controllers\Duplicators\Duplication.cs" />
