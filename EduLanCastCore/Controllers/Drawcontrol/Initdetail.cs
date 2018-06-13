@@ -12,8 +12,8 @@ namespace EduLanCastCore.Controllers.Drawcontrol
     /// </summary>
     public class Initdetail:IDisposable
     {
-        public Device _device { get;private set; }
-        public SwapChain _swapchain { get;private set; }
+        public Device _device;
+        public SwapChain _swapchain;
         public DeviceContext Devicecontext { get; private set; }
         public RenderTargetView RenderTarget { get; private set; }
         public IntPtr outputhandlePtr { get; private set; }

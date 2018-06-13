@@ -27,7 +27,7 @@ namespace EduLanCastCore.Controllers.Drawcontrol
         public InputLayout Layout { get; private set; }
         public Buffer Vertexbuffer { get; private set; }
         public RenderTargetView Rendertarget { get; private set; }
-        public RawColor4 Rcolor4 { get; private set; }
+        public RawColor4 Rcolor4 { get; set; }
         public String Shaderfile { get; set; }
 
         public void Cleancanvas()
