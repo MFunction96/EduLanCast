@@ -17,12 +17,12 @@ namespace EduLanCastCore.Controllers.Drawcontrol
 
         public static float GetRealY(Pointdata p)
         {
-            return Canvainfo.width * p.y / 2;
+            return Canvainfo.width * p.Y / 2;
         }
 
         public static float GetRealX(Pointdata p)
         {
-            return Canvainfo.width * p.x / 2;
+            return Canvainfo.width * p.X / 2;
         }
 
         public static float GetRelateY(float y)

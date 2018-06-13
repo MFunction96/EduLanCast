@@ -19,7 +19,7 @@ namespace EduLanCastCore.Controllers.Drawcontrol
         public static List<Pointdata> CloneList(List<Pointdata> real) {
             List<Pointdata> list = new List<Pointdata>();
             foreach (var pointdata in real) {
-                list.Add(new Pointdata(pointdata.x, pointdata.y));
+                list.Add(new Pointdata(pointdata.X, pointdata.Y));
             }
             return list;
         }

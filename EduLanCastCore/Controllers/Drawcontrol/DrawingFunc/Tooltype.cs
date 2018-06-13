@@ -3,7 +3,7 @@
     /// <summary>
     /// 画图工具类型及其属性
     /// </summary>
-    class Tooltype
+    public class Tooltype
     {
         /// <summary>
         /// Type:

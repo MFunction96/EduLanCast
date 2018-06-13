@@ -10,10 +10,10 @@ namespace EduLanCastCore.Controllers.Drawcontrol
     /// <summary>
     /// 设置渲染屏幕对象与上下文对象
     /// </summary>
-    public class Initdetail
+    public class Initdetail:IDisposable
     {
-        public Device _device;
-        public SwapChain _swapchain;
+        public Device _device { get;private set; }
+        public SwapChain _swapchain { get;private set; }
         public DeviceContext Devicecontext { get; private set; }
         public RenderTargetView RenderTarget { get; private set; }
         public IntPtr outputhandlePtr { get; private set; }
@@ -84,7 +84,7 @@ namespace EduLanCastCore.Controllers.Drawcontrol
         /// <summary>
         /// 释放所有构建的对象：device,swapchain,devicecontext,rendertarget
         /// </summary>
-        public void Clean()
+        public void Dispose()
         {
             _device.Dispose();
             _swapchain.Dispose();

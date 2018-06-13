@@ -46,6 +46,10 @@
       <HintPath>..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -56,6 +60,13 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Controllers\Drawing\DrawingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controllers\Drawing\DrawingForm.Designer.cs">
+      <DependentUpon>DrawingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Drawing\DrawingTest.cs" />
     <Compile Include="Controllers\Duplicators\DuplicationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -67,6 +78,21 @@
       <Project>{923A2EA9-EB4B-486C-844E-73A57A0A68ED}</Project>
       <Name>EduLanCastCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controllers\Drawing\DrawingForm.resx">
+      <DependentUpon>DrawingForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="chalk.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="eraser.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

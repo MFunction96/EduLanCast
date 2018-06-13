@@ -48,6 +48,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,10 +60,12 @@
     <Compile Include="Controllers\Drawcontrol\DrawingFunc\Chalk.cs" />
     <Compile Include="Controllers\Drawcontrol\DrawingFunc\Eraser.cs" />
     <Compile Include="Controllers\Drawcontrol\DrawingFunc\Tooltype.cs" />
+    <Compile Include="Controllers\Drawcontrol\DrawingThrd\DrawingStart.cs" />
     <Compile Include="Controllers\Drawcontrol\Pointtrace.cs" />
+    <Compile Include="Models\Configs\DrawConfig.cs" />
     <Compile Include="Models\Drawmodel\Canvainfo.cs" />
     <Compile Include="Controllers\Drawcontrol\CloneTool.cs" />
-    <Compile Include="Controllers\Drawcontrol\Drawing.cs" />
+    <Compile Include="Controllers\Drawcontrol\Blackboard.cs" />
     <Compile Include="Controllers\Drawcontrol\Initdetail.cs" />
     <Compile Include="Controllers\Drawcontrol\MathTool.cs" />
     <Compile Include="Models\Drawmodel\Strokedata.cs" />
@@ -80,7 +83,12 @@
     <Compile Include="Interfaces\ITerminate.cs" />
     <Compile Include="Services\NativeMethods.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Controllers\Drawcontrol\DrawDocu\eraser.fx" />
+    <None Include="Controllers\Drawcontrol\DrawDocu\chalk.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <None Include="Configs\DuplConfig.json" />
     <None Include="packages.config" />

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EduLanCastCore.Controllers.Drawcontrol
 {
-    class Pointtrace
+    public class Pointtrace
     {
         private int Interval;
         public static int Flag;
@@ -50,7 +50,7 @@ namespace EduLanCastCore.Controllers.Drawcontrol
                 {
                     if (Pointcount > 0)
                     {
-                        if (!_stroke.Plist[Pointcount - 1].x.Equals(x) || !_stroke.Plist[Pointcount - 1].y.Equals(y))
+                        if (!_stroke.Plist[Pointcount - 1].X.Equals(x) || !_stroke.Plist[Pointcount - 1].Y.Equals(y))
                         {
                             _stroke.Plist.Add(new Pointdata(x, y));
                         }
