@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System;
 using SharpDX.Direct3D;
 
+
 namespace EduLanCastCore.Controllers.Drawcontrol
 {
     public class Blackboard:IDisposable
@@ -26,7 +27,7 @@ namespace EduLanCastCore.Controllers.Drawcontrol
         public InputLayout Layout { get; private set; }
         public Buffer Vertexbuffer { get; private set; }
         public RenderTargetView Rendertarget { get; private set; }
-        public RawColor4 Rcolor4;
+        public RawColor4 Rcolor4 { get; private set; }
         public String Shaderfile { get; set; }
 
         public void Cleancanvas()
@@ -154,8 +155,7 @@ namespace EduLanCastCore.Controllers.Drawcontrol
         public void Dispose()
         {
             Vertices.Close();
-            Vertexbuffer.Dispose
-                ();
+            Vertexbuffer.Dispose();
             Layout.Dispose();
             InputSingnature.Dispose();
             Vertexshader.Dispose();
