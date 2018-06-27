@@ -1,4 +1,5 @@
-﻿using EduLanCastCore.Controllers.Drawcontrol;
+﻿
+using EduLanCastCore.Controllers.Drawcontrol;
 using EduLanCastCore.Controllers.Drawcontrol.DrawingFunc;
 using System.Windows.Forms;
 
