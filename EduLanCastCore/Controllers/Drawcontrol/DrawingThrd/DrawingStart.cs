@@ -1,12 +1,11 @@
 ﻿
 using EduLanCastCore.Controllers.Drawcontrol.DrawingFunc;
 using EduLanCastCore.Controllers.Managers;
-using EduLanCastCore.Data;
 using SharpDX.Mathematics.Interop;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EduLanCastCore.Models.Drawmodel;
 
 namespace EduLanCastCore.Controllers.Drawcontrol.DrawingThrd
 {
@@ -14,9 +13,9 @@ namespace EduLanCastCore.Controllers.Drawcontrol.DrawingThrd
     {
         public DrawingStart(Form form)
         {
-            Canvainfo.height = form.Height;
-            Canvainfo.width = form.Width;
-            Canvainfo.handPtr = form.Handle;
+            Canvainfo.Height = form.Height;
+            Canvainfo.Width = form.Width;
+            Canvainfo.HandPtr = form.Handle;
             //默认为Chalk Line:2
             Tooltype.Type = 1;
             Tooltype.Line = 2;
@@ -25,7 +24,8 @@ namespace EduLanCastCore.Controllers.Drawcontrol.DrawingThrd
             form.Show();
             Application.Run(form);
         }
-        override
+
+        sealed override
         protected Task StartCore(Thread thread)
         {
             return Task.Run(()=> { thread.Start(); });
@@ -37,7 +37,7 @@ namespace EduLanCastCore.Controllers.Drawcontrol.DrawingThrd
         }
         private void threadmethod()
         {
-            Initdetail initdetail = new Initdetail(Canvainfo.handPtr,Canvainfo.height,Canvainfo.width);
+            Initdetail initdetail = new Initdetail(Canvainfo.HandPtr,Canvainfo.Height,Canvainfo.Width);
             Chalk chalk = new Chalk(initdetail, new RawColor4(0f,0f, 0f,0.5f));
             Eraser eraser = new Eraser(initdetail,new RawColor4(0f,0f,0f,0.5f));
             chalk.Cleancanvas();

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EduLanCastCore.Controllers.Drawcontrol
+namespace EduLanCastCore.Models.Drawmodel
 {
     public class Strokedata
     {

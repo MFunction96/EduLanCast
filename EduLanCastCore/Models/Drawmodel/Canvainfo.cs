@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace EduLanCastCore.Controllers.Drawcontrol
+namespace EduLanCastCore.Models.Drawmodel
 {
     public class Canvainfo
     {
-        public static IntPtr handPtr;
-        public static float height { get; set; }
-        public static float width { get; set; }
+        public static IntPtr HandPtr;
+        public static float Height { get; set; }
+        public static float Width { get; set; }
 
     }
 }

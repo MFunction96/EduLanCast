@@ -1,10 +1,7 @@
 ﻿using SharpDX.DXGI;
 using SharpDX.Mathematics.Interop;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EduLanCastCore.Models.Drawmodel;
 
 namespace EduLanCastCore.Controllers.Drawcontrol.DrawingFunc
 {
@@ -12,7 +9,7 @@ namespace EduLanCastCore.Controllers.Drawcontrol.DrawingFunc
     {
         public Eraser(Initdetail init, RawColor4 color4)
         {
-            this.Rcolor4 = color4;
+            Rcolor4 = color4;
             Shaderfile = "eraser.fx";
             Init(init);
         }
@@ -26,7 +23,7 @@ namespace EduLanCastCore.Controllers.Drawcontrol.DrawingFunc
             {
                 Createvertex(stroke);
             }
-            _swapchain.Present(0, PresentFlags.None);
+            Swapchain.Present(0, PresentFlags.None);
         }
     }
 }

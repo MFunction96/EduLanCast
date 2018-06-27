@@ -117,6 +117,7 @@ namespace EduLanCastCoreTests.Controllers.Drawing
             this.Name = "DrawingForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DrawingForm";
+            this.Load += new System.EventHandler(this.DrawingForm_Load);
             this.ResumeLayout(false);
 
         }

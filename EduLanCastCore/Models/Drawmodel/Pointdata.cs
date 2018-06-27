@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EduLanCastCore.Controllers.Drawcontrol
+namespace EduLanCastCore.Models.Drawmodel
 {
     /// <summary>
     /// 存储屏幕像素点位置的结构体

@@ -12,13 +12,13 @@ namespace EduLanCastCore.Controllers.Drawcontrol
     /// </summary>
     public class Initdetail:IDisposable
     {
-        public Device _device;
-        public SwapChain _swapchain;
+        public Device Device;
+        public SwapChain Swapchain;
         public DeviceContext Devicecontext { get; private set; }
         public RenderTargetView RenderTarget { get; private set; }
-        public IntPtr outputhandlePtr { get; private set; }
-        private float Width { get; set; }
-        private float Height { get; set; }
+        public IntPtr OutputhandlePtr { get; private set; }
+        private float Width { get; }
+        private float Height { get; }
         /// <summary>
         /// public构造函数实例化一个对象
         /// </summary>
@@ -38,16 +38,13 @@ namespace EduLanCastCore.Controllers.Drawcontrol
         /// </summary>
         private void Setoutput()
         {
-            if (RenderTarget != null)
+            RenderTarget?.Dispose();
+            using (var resource = Resource.FromSwapChain<Texture2D>(Swapchain, 0))
             {
-                RenderTarget.Dispose();
-            }
-            using (var resource = Resource.FromSwapChain<Texture2D>(_swapchain, 0))
-            {
-                RenderTarget = new RenderTargetView(_device, resource);
+                RenderTarget = new RenderTargetView(Device, resource);
             }
 
-            Devicecontext = _device.ImmediateContext;
+            Devicecontext = Device.ImmediateContext;
             Devicecontext.Rasterizer.SetViewport(0.0f, 0.0f, Width, Height);
         }
         /// <summary>
@@ -55,15 +52,12 @@ namespace EduLanCastCore.Controllers.Drawcontrol
         /// </summary>
         private void Createdevice()
         {
-            if (_device != null)
-            {
-                _device.Dispose();
-            }
+            Device?.Dispose();
             var description = new SwapChainDescription
             {
                 BufferCount = 2,
                 Usage = Usage.RenderTargetOutput,
-                OutputHandle = outputhandlePtr,
+                OutputHandle = OutputhandlePtr,
                 IsWindowed = true,
                 ModeDescription = new ModeDescription(0, 0, new Rational(60, 1), Format.R8G8B8A8_UNorm),
                 SampleDescription = new SampleDescription(1, 0),
@@ -71,7 +65,7 @@ namespace EduLanCastCore.Controllers.Drawcontrol
                 SwapEffect = SwapEffect.Discard
             };
 
-            Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, description, out _device, out _swapchain);
+            Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, description, out Device, out Swapchain);
         }
         /// <summary>
         /// 设置Ptr
@@ -79,15 +73,15 @@ namespace EduLanCastCore.Controllers.Drawcontrol
         /// <param name="handle">屏幕对象指针</param>
         private void SetPtr(IntPtr handle)
         {
-            outputhandlePtr = handle;
+            OutputhandlePtr = handle;
         }
         /// <summary>
         /// 释放所有构建的对象：device,swapchain,devicecontext,rendertarget
         /// </summary>
         public void Dispose()
         {
-            _device.Dispose();
-            _swapchain.Dispose();
+            Device.Dispose();
+            Swapchain.Dispose();
             Devicecontext.Dispose();
             RenderTarget.Dispose();
         }

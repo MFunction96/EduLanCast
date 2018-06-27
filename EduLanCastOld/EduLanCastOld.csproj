@@ -87,6 +87,12 @@
     <Compile Include="Data\StaticData.cs" />
     <Compile Include="Models\Network\PcInfo.cs" />
     <Compile Include="Services\ITerminate.cs" />
+    <Compile Include="Views\DrawingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\DrawingForm.Designer.cs">
+      <DependentUpon>DrawingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\PanelForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +101,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Views\DrawingForm.resx">
+      <DependentUpon>DrawingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\PanelForm.resx">
       <DependentUpon>PanelForm.cs</DependentUpon>
     </EmbeddedResource>

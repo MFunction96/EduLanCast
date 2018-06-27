@@ -8,6 +8,7 @@ using SharpDX;
 using SharpDX.Mathematics.Interop;
 using System.Collections.Generic;
 using System;
+using EduLanCastCore.Models.Drawmodel;
 using SharpDX.Direct3D;
 
 
@@ -15,14 +16,14 @@ namespace EduLanCastCore.Controllers.Drawcontrol
 {
     public class Blackboard:IDisposable
     {
-        protected Device _device { get; set; }
-        protected SwapChain _swapchain { get; set; }
+        protected Device Device { get; set; }
+        protected SwapChain Swapchain { get; set; }
         protected ShaderSignature InputSingnature { get; set; }
         protected VertexShader Vertexshader;
         protected PixelShader Pixelshader;
         protected List<Pointdata> Pointlist { get; set; }
         protected DeviceContext Devicecontext { get; private set; }
-        public int Num { get; private set; }
+        public int Num;
         public DataStream Vertices { get; private set; }
         public InputLayout Layout { get; private set; }
         public Buffer Vertexbuffer { get; private set; }
@@ -33,7 +34,7 @@ namespace EduLanCastCore.Controllers.Drawcontrol
         public void Cleancanvas()
         {
             Devicecontext.ClearRenderTargetView(Rendertarget, Rcolor4);
-            _swapchain.Present(0, PresentFlags.None);
+            Swapchain.Present(0, PresentFlags.None);
         }
         public virtual void Render(List<Strokedata> strokelist, Strokedata stroke)
         {
@@ -41,7 +42,6 @@ namespace EduLanCastCore.Controllers.Drawcontrol
         }
         protected void Createvertex(Strokedata stroke)
         {
-            Pointdata a = null, b = null, c = null, d = null;
             lock (stroke.Plist)
             {
                 int count = 0;
@@ -60,6 +60,10 @@ namespace EduLanCastCore.Controllers.Drawcontrol
                         }
                         if (count > 0)
                         {
+                            Pointdata b;
+                            Pointdata a;
+                            Pointdata c;
+                            Pointdata d;
                             if (last.Y.Equals(p.Y))
                             {
                                 a = new Pointdata(last.X, MathTool.GetRelateY(MathTool.GetRealX(last) + stroke.Line * 1f));
@@ -105,8 +109,8 @@ namespace EduLanCastCore.Controllers.Drawcontrol
             Vertices.Position = 0;
 
             var elements = new[] { new InputElement("Position", 0, Format.R32G32B32A32_Float, 0) };
-            Layout = new InputLayout(_device, InputSingnature, elements);
-            Vertexbuffer = new Buffer(_device, Vertices, 12 * 3, ResourceUsage.Default, BindFlags.VertexBuffer, CpuAccessFlags.None, ResourceOptionFlags.None, 0);
+            Layout = new InputLayout(Device, InputSingnature, elements);
+            Vertexbuffer = new Buffer(Device, Vertices, 12 * 3, ResourceUsage.Default, BindFlags.VertexBuffer, CpuAccessFlags.None, ResourceOptionFlags.None, 0);
 
             Devicecontext.InputAssembler.InputLayout = Layout;
             Devicecontext.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
@@ -120,33 +124,27 @@ namespace EduLanCastCore.Controllers.Drawcontrol
 
         protected void Compilepixel()
         {
-            if (Pixelshader != null)
-            {
-                Pixelshader.Dispose();
-            }
+            Pixelshader?.Dispose();
 
-            using (var bytecode = ShaderBytecode.CompileFromFile(Shaderfile, "PShader", "ps_4_0", ShaderFlags.None, EffectFlags.None))
+            using (var bytecode = ShaderBytecode.CompileFromFile(Shaderfile, "PShader", "ps_4_0"))
             {
-                Pixelshader = new PixelShader(_device, bytecode);
+                Pixelshader = new PixelShader(Device, bytecode);
             }
         }
         protected void Compilevertex()
         {
-            if (Vertexshader != null)
-            {
-                Vertexshader.Dispose();
-            }
+            Vertexshader?.Dispose();
 
-            using (var bytecode = ShaderBytecode.CompileFromFile(Shaderfile, "VShader", "vs_5_0", ShaderFlags.None, EffectFlags.None))
+            using (var bytecode = ShaderBytecode.CompileFromFile(Shaderfile, "VShader", "vs_5_0"))
             {
                 InputSingnature = ShaderSignature.GetInputOutputSignature(bytecode);
-                Vertexshader = new VertexShader(_device, bytecode);
+                Vertexshader = new VertexShader(Device, bytecode);
             }
         }
         public void Init(Initdetail init)
         {
-            _device = init._device;
-            _swapchain = init._swapchain;
+            Device = init.Device;
+            Swapchain = init.Swapchain;
             Devicecontext = init.Devicecontext;
             Rendertarget = init.RenderTarget;
             Compilevertex();
@@ -161,8 +159,8 @@ namespace EduLanCastCore.Controllers.Drawcontrol
             Vertexshader.Dispose();
             Pixelshader.Dispose();
             Rendertarget.Dispose();
-            _swapchain.Dispose();
-            _device.Dispose();
+            Swapchain.Dispose();
+            Device.Dispose();
         }
     }
 }

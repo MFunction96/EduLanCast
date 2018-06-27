@@ -12,7 +12,6 @@ namespace EduLanCastCoreTests.Controllers.Drawing
         public void TestMethod1()
         {
             //DrawingStart d = new DrawingStart(new DrawingForm());
-
         }
     }
 }

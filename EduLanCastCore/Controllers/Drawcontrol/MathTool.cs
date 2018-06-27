@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using EduLanCastCore.Models.Drawmodel;
 
 namespace EduLanCastCore.Controllers.Drawcontrol
 {
@@ -17,22 +18,22 @@ namespace EduLanCastCore.Controllers.Drawcontrol
 
         public static float GetRealY(Pointdata p)
         {
-            return Canvainfo.width * p.Y / 2;
+            return Canvainfo.Width * p.Y / 2;
         }
 
         public static float GetRealX(Pointdata p)
         {
-            return Canvainfo.width * p.X / 2;
+            return Canvainfo.Width * p.X / 2;
         }
 
         public static float GetRelateY(float y)
         {
-            return 2 * y / Canvainfo.width;
+            return 2 * y / Canvainfo.Width;
         }
 
         public static float GetRelateX(float x)
         {
-            return 2 * x / Canvainfo.height;
+            return 2 * x / Canvainfo.Height;
         }
 
         public static bool ClockWise(Pointdata a, Pointdata b, Pointdata c)

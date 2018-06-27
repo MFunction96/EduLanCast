@@ -1,25 +1,24 @@
 ﻿using EduLanCastCore.Controllers.Drawcontrol.DrawingFunc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EduLanCastCore.Models.Drawmodel;
 
 namespace EduLanCastCore.Controllers.Drawcontrol
 {
     public class Pointtrace
     {
-        private int Interval;
+        //private int _interval;
         public static int Flag;
         private static readonly Object Flaglock = new Object();
-        public static int Pointcount = 0;
-        private static Strokedata _stroke = new Strokedata(new List<Pointdata>());
-        private static List<Strokedata> Allline = new List<Strokedata>();
+        public static int Pointcount;
 
-        Pointtrace(int interval)
-        {
-            Interval = interval;
-        }
+        public static List<Strokedata> Allline { get; set; } = new List<Strokedata>();
+        public static Strokedata Stroke { get; set; } = new Strokedata(new List<Pointdata>());
+
+        //Pointtrace(int interval)
+        //{
+        //    //_interval = interval;
+        //}
 
         public static void Pressdown()
         {
@@ -35,8 +34,8 @@ namespace EduLanCastCore.Controllers.Drawcontrol
                 Flag = 0;
                 if (!Tooltype.IsonlyClickTool())
                 {
-                    Allline.Add(new Strokedata(_stroke));
-                    _stroke.Clear();
+                    Allline.Add(new Strokedata(Stroke));
+                    Stroke.Clear();
                 }
             }
         }
@@ -45,27 +44,27 @@ namespace EduLanCastCore.Controllers.Drawcontrol
         {
             if (Flag == 1)
             {
-                Pointcount = _stroke.Plist.Count;
+                Pointcount = Stroke.Plist.Count;
                 if (!Tooltype.IsonlyClickTool())
                 {
                     if (Pointcount > 0)
                     {
-                        if (!_stroke.Plist[Pointcount - 1].X.Equals(x) || !_stroke.Plist[Pointcount - 1].Y.Equals(y))
+                        if (!Stroke.Plist[Pointcount - 1].X.Equals(x) || !Stroke.Plist[Pointcount - 1].Y.Equals(y))
                         {
-                            _stroke.Plist.Add(new Pointdata(x, y));
+                            Stroke.Plist.Add(new Pointdata(x, y));
                         }
                     }
                     else
                     {
-                        _stroke.SetTl(Tooltype.Type, Tooltype.Line);
-                        _stroke.Plist.Add(new Pointdata(x, y));
+                        Stroke.SetTl(Tooltype.Type, Tooltype.Line);
+                        Stroke.Plist.Add(new Pointdata(x, y));
                     }
                 }
             }
         }
         public static Strokedata GetPointlist()
         {
-            return _stroke;
+            return Stroke;
         }
         public static List<Strokedata> GetAllPoint()
         {
