@@ -83,6 +83,7 @@
     <Compile Include="Controllers\Managers\FormManager.cs" />
     <Compile Include="Controllers\Managers\Manager.cs" />
     <Compile Include="Controllers\Managers\ThreadManager.cs" />
+    <Compile Include="Controllers\Views\DrawingController.cs" />
     <Compile Include="Controllers\Views\PanelController.cs" />
     <Compile Include="Data\StaticData.cs" />
     <Compile Include="Models\Network\PcInfo.cs" />

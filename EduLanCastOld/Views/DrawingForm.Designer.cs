@@ -1,10 +1,8 @@
-﻿
+﻿using System.Windows.Forms;
 using EduLanCastCore.Controllers.Drawcontrol;
 using EduLanCastCore.Controllers.Drawcontrol.DrawingFunc;
-using System.Windows.Forms;
 
-
-namespace EduLanCastCoreTests.Controllers.Drawing
+namespace EduLanCastOld.Views
 {
     partial class DrawingForm
     {
