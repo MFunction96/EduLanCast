@@ -68,7 +68,6 @@
     <Compile Include="Data\StaticData.cs" />
     <Compile Include="Interfaces\IServiceThread.cs" />
     <Compile Include="Models\Configs\AppConfig.cs" />
-    <Compile Include="Models\Configs\DuplConfig.cs" />
     <Compile Include="Models\Duplicators\BitMapCollection.cs" />
     <Compile Include="Models\Duplicators\DxModel.cs" />
     <Compile Include="Models\Duplicators\MouseCursor.cs" />
@@ -79,7 +78,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Configs\DuplConfig.json" />
     <None Include="packages.config" />
     <None Include="Resources\Resources.json" />
   </ItemGroup>
