@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduLanCastClient", "EduLanC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduLanCastCoreTests", "EduLanCastCoreTests\EduLanCastCoreTests.csproj", "{24076800-1997-4825-A91A-B3F55D10ED1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduLanCastService", "EduLanCastService\EduLanCastService.csproj", "{7EB8E33C-B47F-450A-976D-80B508609FFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,18 @@ Global
 		{24076800-1997-4825-A91A-B3F55D10ED1F}.Release|x64.Build.0 = Release|Any CPU
 		{24076800-1997-4825-A91A-B3F55D10ED1F}.Release|x86.ActiveCfg = Release|Any CPU
 		{24076800-1997-4825-A91A-B3F55D10ED1F}.Release|x86.Build.0 = Release|Any CPU
+		{7EB8E33C-B47F-450A-976D-80B508609FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EB8E33C-B47F-450A-976D-80B508609FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EB8E33C-B47F-450A-976D-80B508609FFF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7EB8E33C-B47F-450A-976D-80B508609FFF}.Debug|x64.Build.0 = Debug|Any CPU
+		{7EB8E33C-B47F-450A-976D-80B508609FFF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7EB8E33C-B47F-450A-976D-80B508609FFF}.Debug|x86.Build.0 = Debug|Any CPU
+		{7EB8E33C-B47F-450A-976D-80B508609FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EB8E33C-B47F-450A-976D-80B508609FFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EB8E33C-B47F-450A-976D-80B508609FFF}.Release|x64.ActiveCfg = Release|Any CPU
+		{7EB8E33C-B47F-450A-976D-80B508609FFF}.Release|x64.Build.0 = Release|Any CPU
+		{7EB8E33C-B47F-450A-976D-80B508609FFF}.Release|x86.ActiveCfg = Release|Any CPU
+		{7EB8E33C-B47F-450A-976D-80B508609FFF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using SharpDX.Direct3D11;
 using SharpDX.DXGI;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using SharpDX.Direct3D11;
 using Device = SharpDX.Direct3D11.Device;
 
 namespace EduLanCastCore.Models.Duplicators
 {
-    public class DxModel
+    public class DxModel : IDisposable
     {
         /// <summary>
         /// 
@@ -20,15 +21,21 @@ namespace EduLanCastCore.Models.Duplicators
         /// <summary>
         /// 
         /// </summary>
-        public Adapter1 SelectedAdapter { get; private set; }
+        public Adapter1 SelectedAdapter { get; protected set; }
         /// <summary>
         /// 
         /// </summary>
-        public Output SelectedOutput { get; private set; }
+        public Output SelectedOutput { get; protected set; }
         /// <summary>
         /// 
         /// </summary>
         public Device Device { get; set; }
+
+        public Rectangle ScreenDpi => SelectedOutput == null
+            ? new Rectangle(0, 0, 0, 0)
+            : new Rectangle(0, 0,
+                SelectedOutput.Description.DesktopBounds.Right - SelectedOutput.Description.DesktopBounds.Left,
+                SelectedOutput.Description.DesktopBounds.Bottom - SelectedOutput.Description.DesktopBounds.Top);
 
         /// <summary>
         /// 
@@ -52,7 +59,7 @@ namespace EduLanCastCore.Models.Duplicators
         /// <param name="adapter"></param>
         public void SelectAdapter(string adapter)
         {
-            SelectedAdapter = Adapters1.First(tmp => tmp.Description.Description == adapter);
+            SelectedAdapter = Adapters1.FirstOrDefault(tmp => tmp.Description.Description == adapter);
             if (SelectedAdapter is null) throw new NullReferenceException();
             Outputs = SelectedAdapter.Outputs;
         }
@@ -62,8 +69,19 @@ namespace EduLanCastCore.Models.Duplicators
         /// <param name="output"></param>
         public void SelectOutput(string output)
         {
-            SelectedOutput = Outputs.First(tmp => tmp.Description.DeviceName == output);
+            SelectedOutput = Outputs.FirstOrDefault(tmp => tmp.Description.DeviceName == output);
             if (SelectedAdapter is null) throw new NullReferenceException();
+        }
+
+
+        public void Dispose()
+        {
+            SelectedAdapter?.Dispose();
+            SelectedOutput?.Dispose();
+            Device?.Dispose();
+            TextureDesc?.Dispose();
+            DuplicatedOutput?.Dispose();
+            ScreenTexture?.Dispose();
         }
     }
 }

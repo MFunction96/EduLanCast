@@ -1,4 +1,5 @@
 ﻿using EduLanCastCore.Services;
+using EduLanCastCore.Services.Structures;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -38,7 +39,7 @@ namespace EduLanCastCore.Models.Duplicators
         {
             // ReSharper disable once RedundantAssignment
             // ReSharper disable once InlineOutVariableDeclaration
-            var cursorInfo = new NativeMethods.CursorInfo { cbSize = Marshal.SizeOf<NativeMethods.CursorInfo>() };
+            var cursorInfo = new CursorInfo { cbSize = Marshal.SizeOf<CursorInfo>() };
 
             if (!NativeMethods.GetCursorInfo(out cursorInfo))
                 return;
