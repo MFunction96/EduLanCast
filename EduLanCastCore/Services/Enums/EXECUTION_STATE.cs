@@ -2,7 +2,7 @@
 
 using System;
 
-namespace EduLanCastCore.Services.Structures
+namespace EduLanCastCore.Services.Enums
 {
     [Flags]
     internal enum EXECUTION_STATE : uint

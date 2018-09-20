@@ -2,7 +2,7 @@
 using EduLanCastCore.Models.Configs;
 using EduLanCastCore.Models.Duplicators;
 using EduLanCastCore.Services;
-using EduLanCastCore.Services.Structures;
+using EduLanCastCore.Services.Enums;
 using SharpDX;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;

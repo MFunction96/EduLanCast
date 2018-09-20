@@ -60,6 +60,7 @@
     <Compile Include="Controllers\Duplicators\Presentation.cs" />
     <Compile Include="Controllers\Managers\Manager.cs" />
     <Compile Include="Controllers\Managers\ThreadManager.cs" />
+    <Compile Include="Controllers\Memory\MemoryCtrl.cs" />
     <Compile Include="Controllers\Threads\DuplicateThread.cs" />
     <Compile Include="Controllers\Threads\PresentThread.cs" />
     <Compile Include="Controllers\Threads\ServiceThread.cs" />
@@ -73,17 +74,29 @@
     <Compile Include="Models\Duplicators\BitMapCollection.cs" />
     <Compile Include="Models\Duplicators\DxModel.cs" />
     <Compile Include="Models\Duplicators\MouseCursor.cs" />
+    <Compile Include="Models\Processes\ProcessEx.cs" />
+    <Compile Include="Models\Registries\RegKey.cs" />
+    <Compile Include="Models\Registries\RegPath.cs" />
+    <Compile Include="Models\Registries\RegStore.cs" />
     <Compile Include="Models\Sockets\SocketMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\ITerminate.cs" />
+    <Compile Include="Services\Enums\ERROR_CODE.cs" />
+    <Compile Include="Services\Enums\KEY_ACCESS_TYPE.cs" />
+    <Compile Include="Services\Enums\KEY_SAM_FLAGS.cs" />
+    <Compile Include="Services\Enums\OPERATE_OPTION.cs" />
+    <Compile Include="Services\Enums\PROCESS_CREATION_FLAGS.cs" />
+    <Compile Include="Services\Enums\REG_CREATE_DISPOSITION.cs" />
+    <Compile Include="Services\Enums\REG_ROOT_KEY.cs" />
     <Compile Include="Services\NativeMethods.cs" />
     <Compile Include="Services\Structures\CursorInfo.cs" />
-    <Compile Include="Services\Structures\EXECUTION_STATE.cs" />
+    <Compile Include="Services\Enums\EXECUTION_STATE.cs" />
     <Compile Include="Services\Structures\IconInfo.cs" />
+    <Compile Include="Services\Structures\PROCESS_INFORMATION.cs" />
+    <Compile Include="Services\Structures\SECURITY_ATTRIBUTES.cs" />
+    <Compile Include="Services\Structures\STARTUPINFO.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\Enums\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

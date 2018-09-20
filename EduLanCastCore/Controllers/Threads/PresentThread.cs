@@ -1,7 +1,7 @@
-﻿using EduLanCastCore.Services;
+﻿using EduLanCastCore.Models.Configs;
+using EduLanCastCore.Services;
+using EduLanCastCore.Services.Enums;
 using System;
-using EduLanCastCore.Models.Configs;
-using EduLanCastCore.Services.Structures;
 
 namespace EduLanCastCore.Controllers.Threads
 {
@@ -16,7 +16,7 @@ namespace EduLanCastCore.Controllers.Threads
 
         public new void Start()
         {
-            NativeMethods.BlockInput(true);
+            if (!Config.AllowInput) NativeMethods.BlockInput(true);
             NativeMethods.SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS |
                                                   EXECUTION_STATE.ES_SYSTEM_REQUIRED |
                                                   EXECUTION_STATE.ES_AWAYMODE_REQUIRED);
@@ -25,14 +25,17 @@ namespace EduLanCastCore.Controllers.Threads
 
         public override void Operation()
         {
-            throw new NotImplementedException();
+            while (true)
+            {
+                //Thread.Sleep(10000);
+            }
         }
 
         public new void Interrupt()
         {
             base.Interrupt();
             NativeMethods.SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
-            NativeMethods.BlockInput(false);
+            if (!Config.AllowInput) NativeMethods.BlockInput(false);
         }
 
         public new void Dispose()
