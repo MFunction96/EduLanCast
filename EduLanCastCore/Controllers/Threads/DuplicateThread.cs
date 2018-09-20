@@ -1,5 +1,8 @@
-﻿using EduLanCastCore.Models.Configs;
+﻿using EduLanCastCore.Controllers.Utils;
+using EduLanCastCore.Models.Configs;
 using EduLanCastCore.Models.Duplicators;
+using EduLanCastCore.Services;
+using EduLanCastCore.Services.Structures;
 using SharpDX;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
@@ -9,7 +12,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
 using System.Threading.Tasks;
-using EduLanCastCore.Controllers.Utils;
 using Device = SharpDX.Direct3D11.Device;
 using MapFlags = SharpDX.Direct3D11.MapFlags;
 
@@ -45,6 +47,9 @@ namespace EduLanCastCore.Controllers.Threads
         {
             Initialization();
             Duplicating = true;
+            NativeMethods.SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS | 
+                                                  EXECUTION_STATE.ES_SYSTEM_REQUIRED | 
+                                                  EXECUTION_STATE.ES_AWAYMODE_REQUIRED);
             base.Start();
         }
 
@@ -98,6 +103,7 @@ namespace EduLanCastCore.Controllers.Threads
         public new void Interrupt()
         {
             Duplicating = false;
+            NativeMethods.SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
         }
 
         protected void Initialization()
@@ -189,6 +195,21 @@ namespace EduLanCastCore.Controllers.Threads
                     throw new Exception("Failed to release frame.", e);
                 }
             }
+        }
+
+        public new void Dispose()
+        {
+            try
+            {
+                Interrupt();
+            }
+            catch (Exception)
+            {
+                // ignore
+            }
+            
+            DxModel?.Dispose();
+            base.Dispose();
         }
     }
 }

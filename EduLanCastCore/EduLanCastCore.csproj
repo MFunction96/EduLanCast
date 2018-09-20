@@ -61,6 +61,7 @@
     <Compile Include="Controllers\Managers\Manager.cs" />
     <Compile Include="Controllers\Managers\ThreadManager.cs" />
     <Compile Include="Controllers\Threads\DuplicateThread.cs" />
+    <Compile Include="Controllers\Threads\PresentThread.cs" />
     <Compile Include="Controllers\Threads\ServiceThread.cs" />
     <Compile Include="Controllers\Threads\SocketThread.cs" />
     <Compile Include="Controllers\Utils\BinaryUtil.cs" />
@@ -76,8 +77,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\ITerminate.cs" />
     <Compile Include="Services\NativeMethods.cs" />
+    <Compile Include="Services\Structures\CursorInfo.cs" />
+    <Compile Include="Services\Structures\EXECUTION_STATE.cs" />
+    <Compile Include="Services\Structures\IconInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Services\Enums\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

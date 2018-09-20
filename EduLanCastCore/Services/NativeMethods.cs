@@ -1,36 +1,12 @@
-﻿using System;
+﻿using EduLanCastCore.Services.Structures;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace EduLanCastCore.Services
 {
-    public class NativeMethods
+    internal class NativeMethods
     {
-        #region Structures
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct IconInfo
-        {
-            private readonly bool fIcon;
-            public readonly int xHotspot;
-            public readonly int yHotspot;
-            public readonly IntPtr hbmMask;
-            public readonly IntPtr hbmColor;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct CursorInfo
-        {
-            public int cbSize;
-            public readonly int flags;
-            public readonly IntPtr hCursor;
-            public Point ptScreenPos;
-        }
-
-        #endregion
-
-        #region PInvoke
-
         [DllImport("user32.dll")]
         public static extern bool DestroyIcon(IntPtr hIcon);
 
@@ -41,13 +17,18 @@ namespace EduLanCastCore.Services
         public static extern bool GetCursorInfo(out CursorInfo pci);
 
         [DllImport("user32.dll")]
-        public static extern bool GetIconInfo(IntPtr hIcon, out IconInfo piconinfo);
+        public static extern bool GetIconInfo(IntPtr hIcon, out IconInfo pIconInfo);
 
         [DllImport("user32.dll")]
         public static extern bool GetCursorPos(ref Point lpPoint);
 
         [DllImport("gdi32.dll")]
         public static extern bool DeleteObject(IntPtr hObject);
-        #endregion
+
+        [DllImport("kernel32.dll")]
+        public static extern EXECUTION_STATE SetThreadExecutionState(EXECUTION_STATE esFlags);
+
+        [DllImport("user32.dll")]
+        public static extern bool BlockInput(bool fBlockIt);
     }
 }

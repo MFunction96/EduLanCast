@@ -15,6 +15,8 @@ namespace EduLanCastCore.Models.Configs
 
         public int BufferSize { get; set; }
 
+        public bool AllowInput { get; set; }
+
         public AppConfig()
         {
             
