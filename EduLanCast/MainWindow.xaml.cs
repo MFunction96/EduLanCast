@@ -24,5 +24,12 @@ namespace EduLanCast
         {
             InitializeComponent();
         }
+
+        private void BtnTestEntry_Click(object sender, RoutedEventArgs e)
+        {
+            var wd = new TestWindow();
+            wd.Show();
+            Close();
+        }
     }
 }
