@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EduLanCastCore.Interfaces
+namespace EduLanCastCore.Interfaces.Threads
 {
     /// <inheritdoc />
     /// <summary>

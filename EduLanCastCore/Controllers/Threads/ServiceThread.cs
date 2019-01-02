@@ -1,4 +1,4 @@
-﻿using EduLanCastCore.Interfaces;
+﻿using EduLanCastCore.Interfaces.Threads;
 using System;
 using System.Threading;
 

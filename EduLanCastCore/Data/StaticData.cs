@@ -1,5 +1,4 @@
 ﻿using EduLanCastCore.Controllers.Managers;
-using System.Threading.Tasks;
 
 namespace EduLanCastCore.Data
 {
@@ -25,9 +24,9 @@ namespace EduLanCastCore.Data
         /// <returns>
         /// 异步任务运行状态。
         /// </returns>
-        public static async Task Terminate()
+        public static void Terminate()
         {
-            await ThreadMgr.Terminate();
+            ThreadMgr.Terminate();
         }
     }
 }

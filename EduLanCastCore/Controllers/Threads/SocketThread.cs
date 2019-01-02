@@ -1,4 +1,6 @@
-﻿using EduLanCastCore.Models.Sockets;
+﻿using EduLanCastCore.Interfaces.NetworkEventArgs;
+using EduLanCastCore.Models.Sockets;
+using System;
 using System.Net.Sockets;
 
 namespace EduLanCastCore.Controllers.Threads
@@ -22,6 +24,30 @@ namespace EduLanCastCore.Controllers.Threads
         /// 请求或反馈信息。
         /// </summary>
         public SocketMessage Message { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public abstract event EventHandler<IConnectCallbackEventArgs> ConnectCallbackHandler;
+        /// <summary>
+        /// 
+        /// </summary>
+        public abstract event EventHandler<IAcceptCallbackEventArgs> AcceptCallbackHandler;
+        /// <summary>
+        /// 
+        /// </summary>
+        public abstract event EventHandler<IReceiveEventArgs> ReceiveHandler;
+        /// <summary>
+        /// 
+        /// </summary>
+        public abstract event EventHandler<IReceiveCallbackEventArgs> ReceiveCallbackHandler;
+        /// <summary>
+        /// 
+        /// </summary>
+        public abstract event EventHandler<ISendEventArgs> SendHandler;
+        /// <summary>
+        /// 
+        /// </summary>
+        public abstract event EventHandler<ISendCallbackEventArgs> SendCallbackHandler;
 
         #endregion
 
@@ -62,7 +88,38 @@ namespace EduLanCastCore.Controllers.Threads
         /// 请在此方法内初始化Socket。
         /// </summary>
         protected abstract void Initialization();
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ar"></param>
+        protected abstract void ConnectCallback(IAsyncResult ar);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ar"></param>
+        protected abstract void AcceptCallback(IAsyncResult ar);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
+        protected abstract void Receive(Socket client);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ar"></param>
+        protected abstract void ReceiveCallback(IAsyncResult ar);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="handler"></param>
+        /// <param name="message"></param>
+        protected abstract void Send(Socket handler, SocketMessage message);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ar"></param>
+        protected abstract void SendCallback(IAsyncResult ar);
+        
         #endregion
 
         #region Private

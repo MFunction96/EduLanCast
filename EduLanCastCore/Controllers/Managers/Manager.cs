@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using EduLanCastCore.Interfaces.Threads;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using EduLanCastCore.Interfaces;
 
 namespace EduLanCastCore.Controllers.Managers
 {
@@ -28,11 +28,11 @@ namespace EduLanCastCore.Controllers.Managers
         /// <returns>
         /// 异步任务运行状态。
         /// </returns>
-        public async Task Start()
+        public void Start()
         {
             foreach (var obj in ManageObject)
             {
-                await TerminateCore(obj.Value);
+                TerminateCore(obj.Value);
             }
         }
         /// <inheritdoc />
@@ -42,11 +42,11 @@ namespace EduLanCastCore.Controllers.Managers
         /// <returns>
         /// 异步任务运行状态。
         /// </returns>
-        public async Task Terminate()
+        public void Terminate()
         {
             foreach (var obj in ManageObject)
             {
-                await TerminateCore(obj.Value);
+                TerminateCore(obj.Value);
             }
         }
         /// <summary>

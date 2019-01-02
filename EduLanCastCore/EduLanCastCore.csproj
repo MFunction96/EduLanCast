@@ -70,7 +70,13 @@
     <Compile Include="Controllers\Utils\FileUtil.cs" />
     <Compile Include="Controllers\Utils\SystemUtil.cs" />
     <Compile Include="Data\StaticData.cs" />
-    <Compile Include="Interfaces\IServiceThread.cs" />
+    <Compile Include="Interfaces\NetworkEventArgs\IAcceptCallbackEventArgs.cs" />
+    <Compile Include="Interfaces\NetworkEventArgs\IConnectCallbackEventArgs.cs" />
+    <Compile Include="Interfaces\NetworkEventArgs\IReceiveCallbackEventArgs.cs" />
+    <Compile Include="Interfaces\NetworkEventArgs\IReceiveEventArgs.cs" />
+    <Compile Include="Interfaces\NetworkEventArgs\ISendCallbackEventArgs.cs" />
+    <Compile Include="Interfaces\Threads\IServiceThread.cs" />
+    <Compile Include="Interfaces\NetworkEventArgs\ISendEventArgs.cs" />
     <Compile Include="Models\Configs\AppConfig.cs" />
     <Compile Include="Models\Duplicators\BitMapCollection.cs" />
     <Compile Include="Models\Duplicators\DxModel.cs" />
@@ -81,7 +87,7 @@
     <Compile Include="Models\Registries\RegStore.cs" />
     <Compile Include="Models\Sockets\SocketMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Interfaces\ITerminate.cs" />
+    <Compile Include="Interfaces\Threads\ITerminate.cs" />
     <Compile Include="Services\Enums\ERROR_CODE.cs" />
     <Compile Include="Services\Enums\KEY_ACCESS_TYPE.cs" />
     <Compile Include="Services\Enums\KEY_SAM_FLAGS.cs" />

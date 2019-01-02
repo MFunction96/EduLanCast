@@ -1,4 +1,4 @@
-﻿using EduLanCastCore.Interfaces;
+﻿using EduLanCastCore.Interfaces.Threads;
 using System;
 using System.Threading.Tasks;
 
@@ -24,7 +24,7 @@ namespace EduLanCastCore.Controllers.Duplicators
         /// <returns>
         /// 异步任务运行状态。
         /// </returns>
-        public Task Terminate()
+        public void Terminate()
         {
             throw new NotImplementedException();
         }

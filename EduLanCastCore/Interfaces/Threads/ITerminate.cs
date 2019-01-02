@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace EduLanCastCore.Interfaces
+namespace EduLanCastCore.Interfaces.Threads
 {
     /// <summary>
     /// 任务结束接口。
@@ -13,6 +13,6 @@ namespace EduLanCastCore.Interfaces
         /// <returns>
         /// 任务完成状态。
         /// </returns>
-        Task Terminate();
+        void Terminate();
     }
 }

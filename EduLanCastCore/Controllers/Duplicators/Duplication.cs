@@ -1,6 +1,6 @@
 ﻿using EduLanCastCore.Controllers.Threads;
 using EduLanCastCore.Data;
-using EduLanCastCore.Interfaces;
+using EduLanCastCore.Interfaces.Threads;
 using EduLanCastCore.Models.Configs;
 using EduLanCastCore.Models.Duplicators;
 using System;
