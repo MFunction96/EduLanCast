@@ -105,6 +105,10 @@
       <Project>{923a2ea9-eb4b-486c-844e-73a57a0a68ed}</Project>
       <Name>EduLanCastCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EduLanCastService\EduLanCastService.csproj">
+      <Project>{7eb8e33c-b47f-450a-976d-80b508609fff}</Project>
+      <Name>EduLanCastService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

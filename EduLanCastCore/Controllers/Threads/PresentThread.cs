@@ -1,6 +1,5 @@
-﻿using EduLanCastCore.Models.Configs;
-using EduLanCastCore.Services;
-using EduLanCastCore.Services.Enums;
+﻿using EduLanCastCore.Controllers.Utils;
+using EduLanCastCore.Models.Configs;
 using System;
 
 namespace EduLanCastCore.Controllers.Threads
@@ -16,10 +15,8 @@ namespace EduLanCastCore.Controllers.Threads
 
         public new void Start()
         {
-            if (!Config.AllowInput) NativeMethods.BlockInput(true);
-            NativeMethods.SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS |
-                                                  EXECUTION_STATE.ES_SYSTEM_REQUIRED |
-                                                  EXECUTION_STATE.ES_AWAYMODE_REQUIRED);
+            if (!Config.AllowInput) SystemUtil.BlockInput(true);
+            SystemUtil.KeepScreenOn(true);
             base.Start();
         }
 
@@ -29,13 +26,14 @@ namespace EduLanCastCore.Controllers.Threads
             {
                 //Thread.Sleep(10000);
             }
+            // ReSharper disable once FunctionNeverReturns
         }
 
         public new void Interrupt()
         {
             base.Interrupt();
-            NativeMethods.SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
-            if (!Config.AllowInput) NativeMethods.BlockInput(false);
+            SystemUtil.KeepScreenOn(false);
+            if (!Config.AllowInput) SystemUtil.BlockInput(false);
         }
 
         public new void Dispose()

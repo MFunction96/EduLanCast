@@ -1,6 +1,6 @@
-﻿using System;
+﻿using EduLanCastCore.Interfaces;
+using System;
 using System.Threading.Tasks;
-using EduLanCastCore.Interfaces;
 
 namespace EduLanCastCore.Controllers.Duplicators
 {

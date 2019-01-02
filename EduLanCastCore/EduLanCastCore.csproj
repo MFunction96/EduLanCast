@@ -68,6 +68,7 @@
     <Compile Include="Controllers\Utils\BinaryUtil.cs" />
     <Compile Include="Controllers\Utils\ErrorUtil.cs" />
     <Compile Include="Controllers\Utils\FileUtil.cs" />
+    <Compile Include="Controllers\Utils\SystemUtil.cs" />
     <Compile Include="Data\StaticData.cs" />
     <Compile Include="Interfaces\IServiceThread.cs" />
     <Compile Include="Models\Configs\AppConfig.cs" />
@@ -96,7 +97,6 @@
     <Compile Include="Services\Structures\SECURITY_ATTRIBUTES.cs" />
     <Compile Include="Services\Structures\STARTUPINFO.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

@@ -1,7 +1,7 @@
-﻿using System.Threading;
-using EduLanCastCore.Controllers.Threads;
+﻿using EduLanCastCore.Controllers.Threads;
 using EduLanCastCore.Models.Configs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading;
 
 namespace EduLanCastCoreTests.Controllers.Threads
 {

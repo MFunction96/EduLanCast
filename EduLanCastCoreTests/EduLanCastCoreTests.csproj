@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Controllers\Duplicators\DuplicationTests.cs" />
     <Compile Include="Controllers\Threads\PresentThreadTests.cs" />
+    <Compile Include="Controllers\Utils\SystemUtilTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
