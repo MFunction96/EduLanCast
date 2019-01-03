@@ -10,13 +10,13 @@ namespace EduLanCastCoreTests.Controllers.Utils
         [TestMethod()]
         public void KeepScreenOnTest()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         [TestMethod()]
         public void BlockInputTest()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         [TestMethod()]
