@@ -449,11 +449,5 @@ namespace EduLanCastCore.Services
         /// <param name="length"></param>
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern void CopyMemory(IntPtr destination, IntPtr source, int length);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [DllImport("firwrlib.dll", SetLastError = true)]
-        public static extern IntPtr GetBiosSerial();
     }
 }

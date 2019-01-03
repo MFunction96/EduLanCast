@@ -1,4 +1,5 @@
-﻿using EduLanCastCore.Services;
+﻿using System;
+using EduLanCastCore.Services;
 using EduLanCastCore.Services.Enums;
 using System.Runtime.InteropServices;
 
@@ -27,8 +28,9 @@ namespace EduLanCastCore.Controllers.Utils
 
         public static string GetBiosSerial()
         {
-            var ptr = NativeMethods.GetBiosSerial();
-            return Marshal.PtrToStringBSTR(ptr);
+            throw new NotImplementedException();
+            //var ptr = NativeMethods.GetBiosSerial();
+            //return Marshal.PtrToStringBSTR(ptr);
         }
     }
 }

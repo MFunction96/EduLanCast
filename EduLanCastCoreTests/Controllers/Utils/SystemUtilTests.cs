@@ -22,7 +22,7 @@ namespace EduLanCastCoreTests.Controllers.Utils
         [TestMethod()]
         public void GetBiosSerialTest()
         {
-            Console.Out.WriteLine(SystemUtil.GetBiosSerial());
+            //Console.Out.WriteLine(SystemUtil.GetBiosSerial());
         }
     }
 }
