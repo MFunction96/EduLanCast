@@ -10,26 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EduLanCast
+namespace EduLanCast.Windows
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Tools.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Tools : Window
     {
-        public MainWindow()
+        public Tools()
         {
             InitializeComponent();
-        }
-
-        private void BtnTestEntry_Click(object sender, RoutedEventArgs e)
-        {
-            var wd = new TestWindow();
-            wd.Show();
-            Close();
         }
     }
 }

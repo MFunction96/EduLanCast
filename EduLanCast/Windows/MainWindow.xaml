@@ -1,0 +1,31 @@
+﻿<Window x:Class="EduLanCast.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EduLanCast"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="BtnTestEntry" Content="Test" HorizontalAlignment="Left" Margin="10,391,0,0" VerticalAlignment="Top" Width="75" Click="BtnTestEntry_Click"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="376" Margin="10,10,0,0" VerticalAlignment="Top" Width="619">
+            <Grid>
+                <Button Content="刷新" HorizontalAlignment="Left" Margin="533,345,0,0" VerticalAlignment="Top" Width="75" x:Name="BtnRefrash" Background="White"/>
+            </Grid>
+        </Border>
+        <Button Content="投屏" HorizontalAlignment="Left" Margin="670,25,0,0" VerticalAlignment="Top" Width="95" Height="50" Click="Button_Click" Background="White" x:Name="BtnCast"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="150" Margin="650,95,0,0" VerticalAlignment="Top" Width="134">
+            <Grid>
+                <Label Content="分辨率：" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top" x:Name="LblRp" FontSize="10"/>
+                <Label Content="帧数：" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" x:Name="Lblframenum" FontSize="10"/>
+                <Label Content="显示器：" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" x:Name="Lbldisplay" FontSize="10"/>
+                <Label Content="0" HorizontalAlignment="Left" Margin="65,9,0,0" VerticalAlignment="Top" FontSize="10" x:Name="LblRpSet"/>
+                <Label Content="60" HorizontalAlignment="Left" Margin="65,31,0,0" VerticalAlignment="Top" FontSize="10" x:Name="LblframenumSet"/>
+                <Label Content="OMG-xxxx" HorizontalAlignment="Center" Margin="65,53,8.8,0" VerticalAlignment="Top" FontSize="10" x:Name="LbldisplaySet"/>
+                <Button Content="设置" HorizontalAlignment="Left" Margin="30,120,0,0" VerticalAlignment="Top" Width="75" Background="White" x:Name="BtnSet" Click="BtnSet_Click"/>
+            </Grid>
+
+        </Border>
+
+    </Grid>
+</Window>
