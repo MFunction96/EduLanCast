@@ -15,11 +15,11 @@ namespace EduLanCastCore.Controllers.Threads
         /// <summary>
         /// Ipv4协议Socket。
         /// </summary>
-        protected Socket Socketv4 { get; set; }
+        public Socket Socketv4 { get; protected set; }
         /// <summary>
         /// Ipv6协议Socket。
         /// </summary>
-        protected Socket Socketv6 { get; set; }
+        public Socket Socketv6 { get; protected set; }
         /// <summary>
         /// 请求或反馈信息。
         /// </summary>

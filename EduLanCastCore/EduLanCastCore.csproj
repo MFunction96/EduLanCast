@@ -61,6 +61,8 @@
     <Compile Include="Controllers\Managers\Manager.cs" />
     <Compile Include="Controllers\Managers\ThreadManager.cs" />
     <Compile Include="Controllers\Memory\MemoryCtrl.cs" />
+    <Compile Include="Controllers\Network\ClientSocket.cs" />
+    <Compile Include="Controllers\Network\ServerSocket.cs" />
     <Compile Include="Controllers\Threads\DuplicateThread.cs" />
     <Compile Include="Controllers\Threads\PresentThread.cs" />
     <Compile Include="Controllers\Threads\ServiceThread.cs" />
@@ -108,5 +110,6 @@
     <None Include="packages.config" />
     <None Include="Resources\Resources.json" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
