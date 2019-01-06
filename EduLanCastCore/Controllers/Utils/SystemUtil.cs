@@ -1,7 +1,8 @@
-﻿using System;
-using EduLanCastCore.Services;
+﻿using EduLanCastCore.Services;
 using EduLanCastCore.Services.Enums;
-using System.Runtime.InteropServices;
+using System;
+using System.Data.SqlTypes;
+using System.Management;
 
 namespace EduLanCastCore.Controllers.Utils
 {
@@ -28,9 +29,24 @@ namespace EduLanCastCore.Controllers.Utils
 
         public static string GetBiosSerial()
         {
-            throw new NotImplementedException();
-            //var ptr = NativeMethods.GetBiosSerial();
-            //return Marshal.PtrToStringBSTR(ptr);
+            var comSerial = new ManagementObjectSearcher("SELECT * FROM Win32_BIOS");
+            var result = string.Empty;
+            foreach (var o in comSerial.Get())
+            {
+                try
+                {
+                    if (o is ManagementObject wmi)
+                    {
+                        result = wmi.GetPropertyValue("SerialNumber").ToString();
+                    }
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
+            if (result == string.Empty) throw new SqlNullValueException(nameof(GetBiosSerial));
+            return result;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -65,6 +64,12 @@ namespace EduLanCastCore.Controllers.Utils
         {
             var fileinfo = new FileInfo(filePath);
             if (fileinfo.Directory != null && !fileinfo.Directory.Exists) fileinfo.Directory?.Create();
+
+            if (obj is null)
+            {
+                File.WriteAllText(filePath, string.Empty);
+                return;
+            }
 
             var json = JsonConvert.SerializeObject(obj, Formatting.Indented);
             if (append)
