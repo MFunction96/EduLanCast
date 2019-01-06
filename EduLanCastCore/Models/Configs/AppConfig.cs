@@ -13,6 +13,8 @@ namespace EduLanCastCore.Models.Configs
 
         public int Fps { get; set; }
 
+        public int Port { get; set; }
+
         public int BufferSize { get; set; }
 
         public bool AllowInput { get; set; }

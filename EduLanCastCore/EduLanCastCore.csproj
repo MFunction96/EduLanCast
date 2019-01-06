@@ -61,8 +61,6 @@
     <Compile Include="Controllers\Managers\Manager.cs" />
     <Compile Include="Controllers\Managers\ThreadManager.cs" />
     <Compile Include="Controllers\Memory\MemoryCtrl.cs" />
-    <Compile Include="Controllers\Network\ClientSocket.cs" />
-    <Compile Include="Controllers\Network\ServerSocket.cs" />
     <Compile Include="Controllers\Threads\DuplicateThread.cs" />
     <Compile Include="Controllers\Threads\PresentThread.cs" />
     <Compile Include="Controllers\Threads\ServiceThread.cs" />
@@ -88,6 +86,7 @@
     <Compile Include="Models\Registries\RegPath.cs" />
     <Compile Include="Models\Registries\RegStore.cs" />
     <Compile Include="Models\Sockets\SocketMessage.cs" />
+    <Compile Include="Models\Sockets\StateObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\Threads\ITerminate.cs" />
     <Compile Include="Services\Enums\ERROR_CODE.cs" />
@@ -110,6 +109,8 @@
     <None Include="packages.config" />
     <None Include="Resources\Resources.json" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controllers\Network\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

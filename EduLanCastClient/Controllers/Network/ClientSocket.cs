@@ -1,15 +1,15 @@
-﻿using EduLanCastCore.Controllers.Threads;
+﻿using System;
+using System.Net.Sockets;
+using EduLanCastCore.Controllers.Threads;
 using EduLanCastCore.Interfaces.NetworkEventArgs;
 using EduLanCastCore.Models.Sockets;
-using System;
-using System.Net.Sockets;
 
-namespace EduLanCastCore.Controllers.Network
+namespace EduLanCastClient.Controllers.Network
 {
     /// <inheritdoc />
     /// <summary>
     /// </summary>
-    public class ServerSocket : SocketThread
+    public class ClientSocket : SocketThread
     {
         /// <inheritdoc />
         /// <summary>

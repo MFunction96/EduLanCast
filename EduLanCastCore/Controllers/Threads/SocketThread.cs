@@ -2,6 +2,7 @@
 using EduLanCastCore.Models.Sockets;
 using System;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace EduLanCastCore.Controllers.Threads
 {
@@ -21,9 +22,21 @@ namespace EduLanCastCore.Controllers.Threads
         /// </summary>
         public Socket Socketv6 { get; protected set; }
         /// <summary>
-        /// 请求或反馈信息。
+        /// 
         /// </summary>
-        public SocketMessage Message { get; set; }
+        protected static ManualResetEvent ConnectDone { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        protected static ManualResetEvent AcceptDone { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        protected static ManualResetEvent ReceiveDone { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        protected static ManualResetEvent SendDone { get; }
         /// <summary>
         /// 
         /// </summary>
@@ -61,10 +74,18 @@ namespace EduLanCastCore.Controllers.Threads
         {
             Socketv4 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             Socketv6 = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
-            Message = new SocketMessage();
             MainThread.IsBackground = true;
         }
-
+        /// <inheritdoc />
+        /// <summary>
+        /// </summary>
+        static SocketThread()
+        {
+            ConnectDone = new ManualResetEvent(false);
+            AcceptDone = new ManualResetEvent(false);
+            SendDone = new ManualResetEvent(false);
+            ReceiveDone = new ManualResetEvent(false);
+        }
         #endregion
 
         #region Methods

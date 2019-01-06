@@ -130,13 +130,13 @@ namespace EduLanCastCore.Controllers.Threads
             catch (SharpDXException e)
                 when (e.Descriptor == SharpDX.DXGI.ResultCode.NotCurrentlyAvailable)
             {
-                ErrorUtil.WriteError(e).GetAwaiter().GetResult();
+                ErrorUtil.WriteError(e);
                 throw new Exception("There is already the maximum number of applications using the Desktop Duplication API running, please close one of the applications and try again.", e);
             }
             catch (SharpDXException e)
                 when (e.Descriptor == SharpDX.DXGI.ResultCode.Unsupported)
             {
-                ErrorUtil.WriteError(e).GetAwaiter().GetResult();
+                ErrorUtil.WriteError(e);
                 throw new NotSupportedException("Desktop Duplication is not supported on this system.\nIf you have multiple graphic cards, try running Captura on integrated graphics.", e);
             }
 
@@ -191,7 +191,7 @@ namespace EduLanCastCore.Controllers.Threads
             {
                 if (e.ResultCode.Failure)
                 {
-                    ErrorUtil.WriteError(e).GetAwaiter().GetResult();
+                    ErrorUtil.WriteError(e);
                     throw new Exception("Failed to release frame.", e);
                 }
             }
