@@ -1,6 +1,6 @@
-﻿using EduLanCastCore.Controllers.Threads;
+﻿using EduLanCast.Models.Network;
+using EduLanCastCore.Controllers.Threads;
 using EduLanCastCore.Controllers.Utils;
-using EduLanCastCore.Interfaces.NetworkEventArgs;
 using EduLanCastCore.Models.Configs;
 using EduLanCastCore.Models.Sockets;
 using System;
@@ -12,42 +12,33 @@ namespace EduLanCast.Controllers.Network
     /// <inheritdoc />
     /// <summary>
     /// </summary>
-    public class ServerSocket : SocketThread
+    internal class ServerSocket : SocketThread
     {
         #region Properties
-
+        /// <summary>
+        /// 
+        /// </summary>
         protected AppConfig Config;
-        /// <inheritdoc />
         /// <summary>
+        /// 
         /// </summary>
-        public override event EventHandler<IConnectCallbackEventArgs> ConnectCallbackHandler;
-        /// <inheritdoc />
+        protected SocketManager Manager;
         /// <summary>
+        /// 
         /// </summary>
-        public override event EventHandler<IAcceptCallbackEventArgs> AcceptCallbackHandler;
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
-        public override event EventHandler<IReceiveEventArgs> ReceiveHandler;
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
-        public override event EventHandler<IReceiveCallbackEventArgs> ReceiveCallbackHandler;
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
-        public override event EventHandler<ISendEventArgs> SendHandler;
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
-        public override event EventHandler<ISendCallbackEventArgs> SendCallbackHandler;
+        public string ReceiveFilePath { get; set; }
         #endregion
 
         #region Construction
-
+        /// <inheritdoc />
+        /// <summary>
+        /// </summary>
+        /// <param name="config"></param>
         public ServerSocket(ref AppConfig config)
         {
             Config = config;
+            ReceiveFilePath = string.Empty;
+            Manager = new SocketManager();
         }
 
         #endregion
@@ -125,6 +116,8 @@ namespace EduLanCast.Controllers.Network
                 if (!(ar.AsyncState is Socket listener)) return;
                 var handler = listener.EndAccept(ar);
 
+                OnRaiseAcceptCallbackEvent(new AcceptCallbackEventArgs(ref Manager, handler));
+
                 // Create the state object.  
                 var state = new StateObject(handler, Config);
                 handler.BeginReceive(state.Buffer, 0, state.BufferSize, 0,
@@ -148,8 +141,26 @@ namespace EduLanCast.Controllers.Network
         /// </summary>
         protected override void ReceiveCallback(IAsyncResult ar)
         {
-            var state = ar.AsyncState as StateObject;
+            if (!(ar.AsyncState is StateObject state)) return;
+            var handler = state.WorkSocket;
+            var bytesRead = handler.EndReceive(ar);
 
+            if (string.IsNullOrEmpty(ReceiveFilePath))
+            {
+
+            }
+            else
+            {
+                if (bytesRead > 0)
+                {
+
+                }
+                else
+                {
+                    handler.BeginReceive(state.Buffer, 0, state.BufferSize, 0, ReceiveCallback, state);
+                }
+            }
+            
 /*            String content = String.Empty;
 
             // Retrieve the state object and the handler socket  
@@ -199,6 +210,22 @@ namespace EduLanCast.Controllers.Network
         protected override void SendCallback(IAsyncResult ar)
         {
             throw new NotImplementedException();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing) return;
+            Manager.Dispose();
+            base.Dispose(true);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        ~ServerSocket()
+        {
+            Dispose(false);
         }
     }
 

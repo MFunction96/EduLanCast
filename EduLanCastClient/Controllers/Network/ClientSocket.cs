@@ -1,15 +1,14 @@
-﻿using System;
-using System.Net.Sockets;
-using EduLanCastCore.Controllers.Threads;
-using EduLanCastCore.Interfaces.NetworkEventArgs;
+﻿using EduLanCastCore.Controllers.Threads;
 using EduLanCastCore.Models.Sockets;
+using System;
+using System.Net.Sockets;
 
 namespace EduLanCastClient.Controllers.Network
 {
     /// <inheritdoc />
     /// <summary>
     /// </summary>
-    public class ClientSocket : SocketThread
+    internal class ClientSocket : SocketThread
     {
         /// <inheritdoc />
         /// <summary>
@@ -18,30 +17,6 @@ namespace EduLanCastClient.Controllers.Network
         {
             throw new NotImplementedException();
         }
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
-        public override event EventHandler<IConnectCallbackEventArgs> ConnectCallbackHandler;
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
-        public override event EventHandler<IAcceptCallbackEventArgs> AcceptCallbackHandler;
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
-        public override event EventHandler<IReceiveEventArgs> ReceiveHandler;
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
-        public override event EventHandler<IReceiveCallbackEventArgs> ReceiveCallbackHandler;
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
-        public override event EventHandler<ISendEventArgs> SendHandler;
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
-        public override event EventHandler<ISendCallbackEventArgs> SendCallbackHandler;
         /// <inheritdoc />
         /// <summary>
         /// </summary>

@@ -75,8 +75,26 @@ namespace EduLanCastCore.Models.Processes
             NativeMethods.WaitForSingleObjectEx(ProcessInformation.hProcess, 0, false);
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing) return;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        ~ProcessEx()
+        {
+            Dispose(false);
         }
     }
 }

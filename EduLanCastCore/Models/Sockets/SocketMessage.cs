@@ -1,6 +1,4 @@
-﻿using EduLanCastCore.Models.Configs;
-using System;
-using System.Net.Sockets;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace EduLanCastCore.Models.Sockets
@@ -44,11 +42,26 @@ namespace EduLanCastCore.Models.Sockets
         /// 
         /// </summary>
         public Type BodyType { get; set; }
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
         /// <summary>
         /// 
         /// </summary>
-        public void Dispose()
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
         {
+            if (!disposing) return;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        ~SocketHeader()
+        {
+            Dispose(false);
         }
     }
 
@@ -71,11 +84,27 @@ namespace EduLanCastCore.Models.Sockets
         {
             Headers = new SocketHeader();
         }
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
         /// <summary>
         /// 
         /// </summary>
-        public void Dispose()
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
         {
+            if (!disposing) return;
+            Headers.Dispose();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        ~SocketMessage()
+        {
+            Dispose(false);
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using EduLanCastCore.Interfaces.NetworkEventArgs;
-using EduLanCastCore.Models.Sockets;
+﻿using EduLanCastCore.Models.Sockets;
+using EduLanCastCore.Models.Sockets.NetworkEventArgs;
 using System;
 using System.Net.Sockets;
 using System.Threading;
@@ -40,28 +40,31 @@ namespace EduLanCastCore.Controllers.Threads
         /// <summary>
         /// 
         /// </summary>
-        public abstract event EventHandler<IConnectCallbackEventArgs> ConnectCallbackHandler;
+        public event EventHandler<BaseConnectCallbackEventArgs> ConnectCallbackHandler;
         /// <summary>
         /// 
         /// </summary>
-        public abstract event EventHandler<IAcceptCallbackEventArgs> AcceptCallbackHandler;
+        public event EventHandler<BaseAcceptCallbackEventArgs> AcceptCallbackHandler;
         /// <summary>
         /// 
         /// </summary>
-        public abstract event EventHandler<IReceiveEventArgs> ReceiveHandler;
+        public event EventHandler<BaseReceiveEventArgs> ReceiveHandler;
         /// <summary>
         /// 
         /// </summary>
-        public abstract event EventHandler<IReceiveCallbackEventArgs> ReceiveCallbackHandler;
+        public event EventHandler<BaseReceiveCallbackEventArgs> ReceiveCallbackHandler;
         /// <summary>
         /// 
         /// </summary>
-        public abstract event EventHandler<ISendEventArgs> SendHandler;
+        public event EventHandler<BaseSendEventArgs> SendHandler;
         /// <summary>
         /// 
         /// </summary>
-        public abstract event EventHandler<ISendCallbackEventArgs> SendCallbackHandler;
-
+        public event EventHandler<BaseSendCallbackEventArgs> SendCallbackHandler;
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler<BaseCloseEventArgs> CloseHandler; 
         #endregion
 
         #region Construction
@@ -92,7 +95,18 @@ namespace EduLanCastCore.Controllers.Threads
 
         #region Implement
 
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing) return;
+            Socketv4.Close();
+            Socketv6.Close();
+            base.Dispose(true);
+        }
 
+        ~SocketThread()
+        {
+            Dispose(false);
+        }
 
         #endregion
 
@@ -140,7 +154,63 @@ namespace EduLanCastCore.Controllers.Threads
         /// </summary>
         /// <param name="ar"></param>
         protected abstract void SendCallback(IAsyncResult ar);
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseConnectCallbackEvent(BaseConnectCallbackEventArgs e)
+        {
+            ConnectCallbackHandler?.Invoke(this, e);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseAcceptCallbackEvent(BaseAcceptCallbackEventArgs e)
+        {
+            AcceptCallbackHandler?.Invoke(this, e);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseReceiveEvent(BaseReceiveEventArgs e)
+        {
+            ReceiveHandler?.Invoke(this, e);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseReceiveCallbackEvent(BaseReceiveCallbackEventArgs e)
+        {
+            ReceiveCallbackHandler?.Invoke(this, e);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseSendEvent(BaseSendEventArgs e)
+        {
+            SendHandler?.Invoke(this, e);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseSendCallbackEvent(BaseSendCallbackEventArgs e)
+        {
+            SendCallbackHandler?.Invoke(this, e);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseCloseEvent(BaseCloseEventArgs e)
+        {
+            CloseHandler?.Invoke(this, e);
+        }
+
         #endregion
 
         #region Private

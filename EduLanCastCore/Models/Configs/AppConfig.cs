@@ -9,7 +9,7 @@ namespace EduLanCastCore.Models.Configs
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public class AppConfig : IDisposable
+    public sealed class AppConfig : IDisposable
     {
         /// <summary>
         /// 
@@ -58,10 +58,26 @@ namespace EduLanCastCore.Models.Configs
             FileUtil.ExportJson(new AppConfig(), $"{ConfigPath}\\{ConfigName}");
         }
         /// <inheritdoc />
-        /// <summary>
-        /// </summary>
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
+        private void Dispose(bool disposing)
+        {
+            if (!disposing) return;
+
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        ~AppConfig()
+        {
+            Dispose(false);
         }
     }
 }
