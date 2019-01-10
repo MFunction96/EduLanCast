@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using EduLanCastCore.Controllers.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,19 +11,23 @@ namespace EduLanCastCoreTests.Controllers.Utils
         [TestMethod()]
         public void KeepScreenOnTest()
         {
-            //throw new NotImplementedException();
+            SystemUtil.KeepScreenOn(true);
+            Thread.Sleep(10000);
+            SystemUtil.KeepScreenOn(false);
         }
 
         [TestMethod()]
         public void BlockInputTest()
         {
-            //throw new NotImplementedException();
+            SystemUtil.BlockInput(true);
+            Thread.Sleep(10000);
+            SystemUtil.BlockInput(false);
         }
 
         [TestMethod()]
         public void GetBiosSerialTest()
         {
-            //Console.Out.WriteLine(SystemUtil.GetBiosSerial());
+            Console.Out.WriteLine(SystemUtil.GetBiosSerial());
         }
     }
 }

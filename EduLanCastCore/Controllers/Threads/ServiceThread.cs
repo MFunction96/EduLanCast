@@ -45,7 +45,24 @@ namespace EduLanCastCore.Controllers.Threads
         /// <inheritdoc />
         public void Dispose()
         {
-            MainThread.Interrupt();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing) return;
+
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        ~ServiceThread()
+        {
+            Dispose(false);
         }
     }
 }

@@ -1,7 +1,8 @@
-﻿using EduLanCastCore.Interfaces.NetworkEventArgs;
-using EduLanCastCore.Models.Sockets;
+﻿using EduLanCastCore.Models.Sockets;
+using EduLanCastCore.Models.Sockets.NetworkEventArgs;
 using System;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace EduLanCastCore.Controllers.Threads
 {
@@ -21,34 +22,49 @@ namespace EduLanCastCore.Controllers.Threads
         /// </summary>
         public Socket Socketv6 { get; protected set; }
         /// <summary>
-        /// 请求或反馈信息。
+        /// 
         /// </summary>
-        public SocketMessage Message { get; set; }
+        protected static ManualResetEvent ConnectDone { get; }
         /// <summary>
         /// 
         /// </summary>
-        public abstract event EventHandler<IConnectCallbackEventArgs> ConnectCallbackHandler;
+        protected static ManualResetEvent AcceptDone { get; }
         /// <summary>
         /// 
         /// </summary>
-        public abstract event EventHandler<IAcceptCallbackEventArgs> AcceptCallbackHandler;
+        protected static ManualResetEvent ReceiveDone { get; }
         /// <summary>
         /// 
         /// </summary>
-        public abstract event EventHandler<IReceiveEventArgs> ReceiveHandler;
+        protected static ManualResetEvent SendDone { get; }
         /// <summary>
         /// 
         /// </summary>
-        public abstract event EventHandler<IReceiveCallbackEventArgs> ReceiveCallbackHandler;
+        public event EventHandler<BaseConnectCallbackEventArgs> ConnectCallbackHandler;
         /// <summary>
         /// 
         /// </summary>
-        public abstract event EventHandler<ISendEventArgs> SendHandler;
+        public event EventHandler<BaseAcceptCallbackEventArgs> AcceptCallbackHandler;
         /// <summary>
         /// 
         /// </summary>
-        public abstract event EventHandler<ISendCallbackEventArgs> SendCallbackHandler;
-
+        public event EventHandler<BaseReceiveEventArgs> ReceiveHandler;
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler<BaseReceiveCallbackEventArgs> ReceiveCallbackHandler;
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler<BaseSendEventArgs> SendHandler;
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler<BaseSendCallbackEventArgs> SendCallbackHandler;
+        /// <summary>
+        /// 
+        /// </summary>
+        public event EventHandler<BaseCloseEventArgs> CloseHandler; 
         #endregion
 
         #region Construction
@@ -61,17 +77,36 @@ namespace EduLanCastCore.Controllers.Threads
         {
             Socketv4 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             Socketv6 = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
-            Message = new SocketMessage();
             MainThread.IsBackground = true;
         }
-
+        /// <inheritdoc />
+        /// <summary>
+        /// </summary>
+        static SocketThread()
+        {
+            ConnectDone = new ManualResetEvent(false);
+            AcceptDone = new ManualResetEvent(false);
+            SendDone = new ManualResetEvent(false);
+            ReceiveDone = new ManualResetEvent(false);
+        }
         #endregion
 
         #region Methods
 
         #region Implement
 
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing) return;
+            Socketv4.Close();
+            Socketv6.Close();
+            base.Dispose(true);
+        }
 
+        ~SocketThread()
+        {
+            Dispose(false);
+        }
 
         #endregion
 
@@ -119,7 +154,63 @@ namespace EduLanCastCore.Controllers.Threads
         /// </summary>
         /// <param name="ar"></param>
         protected abstract void SendCallback(IAsyncResult ar);
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseConnectCallbackEvent(BaseConnectCallbackEventArgs e)
+        {
+            ConnectCallbackHandler?.Invoke(this, e);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseAcceptCallbackEvent(BaseAcceptCallbackEventArgs e)
+        {
+            AcceptCallbackHandler?.Invoke(this, e);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseReceiveEvent(BaseReceiveEventArgs e)
+        {
+            ReceiveHandler?.Invoke(this, e);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseReceiveCallbackEvent(BaseReceiveCallbackEventArgs e)
+        {
+            ReceiveCallbackHandler?.Invoke(this, e);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseSendEvent(BaseSendEventArgs e)
+        {
+            SendHandler?.Invoke(this, e);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseSendCallbackEvent(BaseSendCallbackEventArgs e)
+        {
+            SendCallbackHandler?.Invoke(this, e);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnRaiseCloseEvent(BaseCloseEventArgs e)
+        {
+            CloseHandler?.Invoke(this, e);
+        }
+
         #endregion
 
         #region Private

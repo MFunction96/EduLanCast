@@ -1,15 +1,14 @@
 ﻿using EduLanCastCore.Models.Configs;
 using System;
-using System.Threading.Tasks;
 
 namespace EduLanCastCore.Controllers.Utils
 {
     public static class ErrorUtil
     {
-        public static async Task WriteError(Exception e)
+        public static void WriteError(Exception e)
         {
             var path = $"{AppConfig.ConfigPath}\\{AppConfig.ErrorName}";
-            await FileUtil.ExportObj(e, path, true);
+            FileUtil.ExportJson(e, path, true);
         }
     }
 }

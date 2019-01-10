@@ -1,48 +1,8 @@
-﻿using EduLanCastCore.Models.Configs;
-using System;
-using System.Net.Sockets;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace EduLanCastCore.Models.Sockets
 {
-    // State object for reading client data asynchronously  
-    /// <summary>
-    /// 
-    /// </summary>
-    public class StateObject
-    {
-        // Client  socket.  
-        /// <summary>
-        /// 
-        /// </summary>
-        public Socket WorkSocket;
-        // Size of receive buffer.  
-        /// <summary>
-        /// 
-        /// </summary>
-        public int BufferSize;
-        // Receive buffer.  
-        /// <summary>
-        /// 
-        /// </summary>
-        public byte[] Buffer;
-        /// <summary>
-        /// 
-        /// </summary>
-        public int ReceiveSize;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="socket"></param>
-        /// <param name="config"></param>
-        public StateObject(Socket socket, AppConfig config)
-        {
-            WorkSocket = socket;
-            BufferSize = config.BufferSize;
-            Buffer = new byte[BufferSize];
-            ReceiveSize = 0;
-        }
-    }
     /// <summary>
     /// 
     /// </summary>
@@ -82,11 +42,26 @@ namespace EduLanCastCore.Models.Sockets
         /// 
         /// </summary>
         public Type BodyType { get; set; }
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
         /// <summary>
         /// 
         /// </summary>
-        public void Dispose()
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
         {
+            if (!disposing) return;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        ~SocketHeader()
+        {
+            Dispose(false);
         }
     }
 
@@ -109,11 +84,27 @@ namespace EduLanCastCore.Models.Sockets
         {
             Headers = new SocketHeader();
         }
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
         /// <summary>
         /// 
         /// </summary>
-        public void Dispose()
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
         {
+            if (!disposing) return;
+            Headers.Dispose();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        ~SocketMessage()
+        {
+            Dispose(false);
         }
     }
 }

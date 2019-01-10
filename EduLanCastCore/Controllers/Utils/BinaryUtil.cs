@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace EduLanCastCore.Controllers.Utils
 {
@@ -49,6 +51,31 @@ namespace EduLanCastCore.Controllers.Utils
                 var formatter = new BinaryFormatter();
                 return (TType)formatter.Deserialize(stream);
             }
+        }
+
+        // ReSharper disable once InconsistentNaming
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static string ComputeSHA1(object obj)
+        {
+            var binary = SerializeObject(obj);
+
+            var sha = new SHA1CryptoServiceProvider();
+            // This is one implementation of the abstract class SHA1.
+            var hash = sha.ComputeHash(binary);
+
+            var sb = new StringBuilder(hash.Length << 1);
+
+            foreach (var b in hash)
+            {
+                // can be "x2" if you want lowercase
+                sb.Append(b.ToString("X2"));
+            }
+
+            return sb.ToString();
         }
     }
 }
